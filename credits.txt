@@ -1,0 +1,25 @@
+[wave amp=25.0 freq=1.0 connected=0]Made with love by the Starbit Light team![/wave]
+
+
+[wave amp=25.0 freq=1.0 connected=0]Raphael "Neko" K.[/wave]
+Developer
+Sound design
+Graphic design
+3D models
+
+[wave amp=25.0 freq=1.0 connected=0]Hushiro Neko VD[/wave]
+Project ideas, testing & feedback
+
+
+[wave amp=25.0 freq=1.0 connected=0]Third Party[/wave]
+Ricardo Subtil - Controller Icons
+Nicolae (XELU) Berbece - Controllers & Keyboard Prompts
+
+
+[wave amp=25.0 freq=1.0 connected=0]Google Fonts[/wave]
+Naipe Foundry, Leandro Assis, Álvaro Franca, Felipe Casaprima - Gabarito
+Agung Rohmat - Delicious Handrawn
+Google Material Design icons
+
+
+[wave amp=25.0 freq=1.0 connected=0]Made with Godot[/wave]

@@ -1,0 +1,11 @@
+[gd_resource type="AudioStreamSynchronized" load_steps=3 format=3 uid="uid://crqn5d7b6gfmj"]
+
+[ext_resource type="AudioStream" uid="uid://ct5lmg0rypgv3" path="res://audios/bgm/main_track.ogg" id="1_yjmua"]
+[ext_resource type="AudioStream" uid="uid://c31anjw6oeeqi" path="res://audios/bgm/main_track_drums.ogg" id="2_njxq6"]
+
+[resource]
+stream_count = 2
+stream_0/stream = ExtResource("1_yjmua")
+stream_0/volume = 0.0
+stream_1/stream = ExtResource("2_njxq6")
+stream_1/volume = 0.0
