@@ -161,10 +161,10 @@ _data = {
 [sub_resource type="ViewportTexture" id="ViewportTexture_uajv8"]
 viewport_path = NodePath("GotchiHUD/SubViewport")
 
-[node name="Game" type="Node" node_paths=PackedStringArray("intro_animation", "nekogotchi_root", "game_screen")]
+[node name="Game" type="Node" node_paths=PackedStringArray("intro_animation", "nekogotchi", "game_screen")]
 script = ExtResource("1_akto4")
 intro_animation = NodePath("GotchiHUD/SubViewport/Control/IntroAnimationPlayer")
-nekogotchi_root = NodePath("Nekogotchi")
+nekogotchi = NodePath("Nekogotchi")
 game_screen = NodePath("GotchiHUD/SubViewport/Game2D")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -190,6 +190,7 @@ sky_mode = 1
 transparent_bg = true
 screen_space_aa = 1
 use_debanding = true
+scaling_3d_scale = 2.0
 canvas_item_default_texture_filter = 2
 gui_snap_controls_to_pixels = false
 
@@ -250,9 +251,6 @@ transform = Transform3D(0.258819, 0, -0.965926, 0, 1, 0, 0.965926, 0, 0.258819, 
 
 [node name="TamaChainBase" parent="Nekogotchi/Nekogotchi/TamaBase/TamaChainHolder" index="0"]
 transform = Transform3D(-0.891872, 0.391427, 0.226602, -0.069786, -0.614108, 0.78613, 0.446871, 0.685314, 0.575022, -0.035248, -0.0396296, -0.136325)
-
-[node name="TamaChain" parent="Nekogotchi/Nekogotchi/TamaBase/TamaChainHolder/TamaChainBase" index="0"]
-transform = Transform3D(-0.64067, -0.138858, 0.069937, 0.1412, -0.395524, 0.508186, -0.0650782, 0.508831, 0.414108, 0.189389, 1.04386, 0.843364)
 
 [node name="Sprite3D" type="Sprite3D" parent="Nekogotchi/Nekogotchi" index="1"]
 transform = Transform3D(0.19, 0, 3.72529e-09, 0, 0.19, 0, -3.72529e-09, 0, 0.19, 0, 0, 0.230111)
