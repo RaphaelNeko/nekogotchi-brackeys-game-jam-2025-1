@@ -1,0 +1,264 @@
+[gd_scene load_steps=14 format=3 uid="uid://c8udl3akkft1y"]
+
+[ext_resource type="Script" path="res://scripts/game.gd" id="1_akto4"]
+[ext_resource type="PackedScene" uid="uid://buhg6k20kino5" path="res://models/nekogotchi.tscn" id="1_kmspo"]
+[ext_resource type="AudioStream" uid="uid://cwafnrnenyd3g" path="res://audios/sfx/intro.wav" id="2_1r7j8"]
+[ext_resource type="Texture2D" uid="uid://cmalu4a4tkyfs" path="res://sprites/neko/nekogotchi4.png" id="2_7lmun"]
+[ext_resource type="Texture2D" uid="uid://bkni0kbhvtsne" path="res://sprites/neko/nekogotchi5.png" id="4_kqvxr"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_egll1"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_s1m24"]
+sky_material = SubResource("ProceduralSkyMaterial_egll1")
+
+[sub_resource type="Environment" id="Environment_hdo1k"]
+background_mode = 2
+sky = SubResource("Sky_s1m24")
+tonemap_mode = 2
+
+[sub_resource type="LabelSettings" id="LabelSettings_0q320"]
+font_size = 49
+font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Animation" id="Animation_e535a"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("IntroLabel:text")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [""]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("IntroNeko:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("IntroNeko:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0872665]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("IntroNeko:flip_h")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("IntroNeko:texture")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_7lmun")]
+}
+
+[sub_resource type="Animation" id="Animation_kyr71"]
+resource_name = "intro_anim"
+length = 16.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("IntroLabel:text")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0666667, 4.82967, 7.16667, 12.0013, 14.2667, 15.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": ["", "Lemme be your
+Tamagotchi-i-i-i-i!!", "", "You gotta take care
+of me-e-e-e-e!!", "", "Lemme be your
+Tamagotchi!", ""]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("IntroNeko:rotation")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(4.8, 5.22837, 5.69504, 6.12341, 6.56171, 6.99008, 7.45675, 11.9, 12.3284, 12.795, 13.2234, 13.6617, 14.0901, 14.5567),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.174533, -0.174533, 0.174533, -0.174533, 0.174533, -0.174533, 0.174533, 0.174533, -0.174533, 0.174533, -0.174533, 0.174533, -0.174533, 0.174533]
+}
+tracks/2/type = "audio"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AudioStreamPlayer")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("2_1r7j8")
+}],
+"times": PackedFloat32Array(0)
+}
+tracks/2/use_blend = true
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("IntroNeko:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 4.83007, 7.16324, 12.0031, 14.2605),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [false, true, false, true, false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("IntroNeko:flip_h")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(4.6, 5.03333, 5.5, 5.93333, 6.33333, 6.76667, 7.26667, 11.7, 12.1333, 12.6, 13.0333, 13.4333, 13.8667, 14.3667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [false, true, false, true, false, true, false, false, true, false, true, false, true, false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("IntroNeko:texture")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(4.6, 4.8, 5.03333, 5.23333, 5.46667, 5.66667, 5.91531, 6.11531, 6.37201, 6.57201, 6.8, 7, 11.7333, 11.9333, 12.1667, 12.3667, 12.6, 12.8, 13.0486, 13.2486, 13.5053, 13.7053, 13.9333, 14.1333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("2_7lmun"), ExtResource("4_kqvxr"), ExtResource("2_7lmun"), ExtResource("4_kqvxr"), ExtResource("2_7lmun"), ExtResource("4_kqvxr"), ExtResource("2_7lmun"), ExtResource("4_kqvxr"), ExtResource("2_7lmun"), ExtResource("4_kqvxr"), ExtResource("2_7lmun"), ExtResource("4_kqvxr"), ExtResource("2_7lmun"), ExtResource("4_kqvxr"), ExtResource("2_7lmun"), ExtResource("4_kqvxr"), ExtResource("2_7lmun"), ExtResource("4_kqvxr"), ExtResource("2_7lmun"), ExtResource("4_kqvxr"), ExtResource("2_7lmun"), ExtResource("4_kqvxr"), ExtResource("2_7lmun"), ExtResource("4_kqvxr")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_c7dyg"]
+_data = {
+"RESET": SubResource("Animation_e535a"),
+"intro": SubResource("Animation_kyr71")
+}
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_uajv8"]
+viewport_path = NodePath("GotchiHUD/SubViewport")
+
+[node name="Game" type="Node" node_paths=PackedStringArray("intro_animation")]
+script = ExtResource("1_akto4")
+intro_animation = NodePath("GotchiHUD/SubViewport/Control/IntroAnimationPlayer")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_hdo1k")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.936672, 0.0763954, -0.341773, 0, 0.975917, 0.218143, 0.350207, -0.204329, 0.914114, 0, 0, 0)
+light_energy = 0.3
+shadow_enabled = true
+
+[node name="GotchiHUD" type="Node3D" parent="."]
+
+[node name="SubViewport" type="SubViewport" parent="GotchiHUD"]
+transparent_bg = true
+
+[node name="Control" type="Control" parent="GotchiHUD/SubViewport"]
+custom_minimum_size = Vector2(512, 512)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 512.0
+offset_bottom = 512.0
+
+[node name="IntroLabel" type="Label" parent="GotchiHUD/SubViewport/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -41.0
+offset_top = -10.0
+offset_right = 41.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+label_settings = SubResource("LabelSettings_0q320")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="IntroAnimationPlayer" type="AnimationPlayer" parent="GotchiHUD/SubViewport/Control"]
+libraries = {
+"": SubResource("AnimationLibrary_c7dyg")
+}
+
+[node name="IntroNeko" type="TextureRect" parent="GotchiHUD/SubViewport/Control"]
+visible = false
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -64.0
+offset_right = 64.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 0.0872665
+pivot_offset = Vector2(64, 128)
+texture = ExtResource("2_7lmun")
+expand_mode = 1
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="GotchiHUD/SubViewport/Control"]
+
+[node name="Nekogotchi" parent="." instance=ExtResource("1_kmspo")]
+
+[node name="Sprite3D" type="Sprite3D" parent="Nekogotchi"]
+transform = Transform3D(0.19, 0, 0, 0, 0.19, 0, 0, 0, 0.19, 0, 0, 0.230111)
+modulate = Color(0, 0, 0, 0.568627)
+shaded = true
+texture = SubResource("ViewportTexture_uajv8")
+
+[node name="CamRoot" type="Marker3D" parent="."]
+transform = Transform3D(0.986286, 0.0143848, 0.16442, 0, 0.996195, -0.0871557, -0.165048, 0.0859604, 0.982533, 0, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="CamRoot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8)
+fov = 45.0
+
+[editable path="Nekogotchi"]
+[editable path="Nekogotchi/Nekogotchi"]

@@ -1,4 +1,4 @@
-[gd_resource type="AudioBusLayout" load_steps=4 format=3 uid="uid://cvhq7r1viwyop"]
+[gd_resource type="AudioBusLayout" load_steps=6 format=3 uid="uid://cvhq7r1viwyop"]
 
 [sub_resource type="AudioEffectHardLimiter" id="AudioEffectHardLimiter_si2c6"]
 resource_name = "HardLimiter"
@@ -13,6 +13,30 @@ db = 3
 resource_name = "HardLimiter"
 ceiling_db = -0.1
 
+[sub_resource type="AudioEffectDelay" id="AudioEffectDelay_i0jin"]
+resource_name = "Delay"
+tap1_delay_ms = 800.0
+tap1_level_db = -9.97
+tap1_pan = 1.0
+tap2_delay_ms = 400.0
+tap2_level_db = -3.57
+tap2_pan = -1.0
+feedback_active = true
+feedback_delay_ms = 800.0
+feedback_level_db = -12.61
+
+[sub_resource type="AudioEffectEQ10" id="AudioEffectEQ10_f0ti2"]
+resource_name = "EQ10"
+band_db/31_hz = -60.0
+band_db/62_hz = -60.0
+band_db/125_hz = -60.0
+band_db/250_hz = -60.0
+band_db/500_hz = -35.0
+band_db/1000_hz = -20.0
+band_db/4000_hz = -60.0
+band_db/8000_hz = -60.0
+band_db/16000_hz = -60.0
+
 [resource]
 bus/0/effect/0/effect = SubResource("AudioEffectHardLimiter_si2c6")
 bus/0/effect/0/enabled = true
@@ -26,3 +50,13 @@ bus/1/effect/0/effect = SubResource("AudioEffectLowPassFilter_nl4mt")
 bus/1/effect/0/enabled = false
 bus/1/effect/1/effect = SubResource("AudioEffectHardLimiter_tnuem")
 bus/1/effect/1/enabled = true
+bus/2/name = &"BGM_EndChime"
+bus/2/solo = false
+bus/2/mute = false
+bus/2/bypass_fx = false
+bus/2/volume_db = 2.17149
+bus/2/send = &"BGM"
+bus/2/effect/0/effect = SubResource("AudioEffectDelay_i0jin")
+bus/2/effect/0/enabled = true
+bus/2/effect/1/effect = SubResource("AudioEffectEQ10_f0ti2")
+bus/2/effect/1/enabled = true

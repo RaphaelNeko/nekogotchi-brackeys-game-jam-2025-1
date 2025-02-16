@@ -1,7 +1,7 @@
 [gd_resource type="AudioStreamSynchronized" load_steps=3 format=3 uid="uid://crqn5d7b6gfmj"]
 
-[ext_resource type="AudioStream" uid="uid://ct5lmg0rypgv3" path="res://audios/bgm/main_track.ogg" id="1_yjmua"]
-[ext_resource type="AudioStream" uid="uid://c31anjw6oeeqi" path="res://audios/bgm/main_track_drums.ogg" id="2_njxq6"]
+[ext_resource type="AudioStream" uid="uid://cf000dwj58ha3" path="res://audios/bgm/main_track.ogg" id="1_yjmua"]
+[ext_resource type="AudioStream" uid="uid://cy7ax1ch8br7j" path="res://audios/bgm/main_track_drums.ogg" id="2_njxq6"]
 
 [resource]
 stream_count = 2

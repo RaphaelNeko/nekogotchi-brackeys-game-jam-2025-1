@@ -1,11 +1,73 @@
-[gd_scene load_steps=2 format=3 uid="uid://dcunr1ipejl8l"]
+[gd_scene load_steps=6 format=3 uid="uid://dcunr1ipejl8l"]
 
 [ext_resource type="AudioStream" uid="uid://crqn5d7b6gfmj" path="res://audios/bgm/main_track.tres" id="1_2ut68"]
+[ext_resource type="Script" path="res://scripts/music_player.gd" id="1_kwnwl"]
+[ext_resource type="AudioStream" uid="uid://crat0i2nv23yn" path="res://audios/bgm/success.ogg" id="2_r82ux"]
+[ext_resource type="AudioStream" uid="uid://bnwe5patv33mx" path="res://audios/bgm/defeat.ogg" id="3_qoo5i"]
+[ext_resource type="AudioStream" uid="uid://beokwq34jao6y" path="res://audios/bgm/main_track_end.ogg" id="4_05ywj"]
 
 [node name="MusicPlayer" type="Node"]
+script = ExtResource("1_kwnwl")
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="Main" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("1_2ut68")
-autoplay = true
 bus = &"BGM"
 playback_type = 1
+
+[node name="Success" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_r82ux")
+bus = &"BGM"
+playback_type = 1
+
+[node name="Defeat" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_qoo5i")
+bus = &"BGM"
+playback_type = 1
+
+[node name="EndChime" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_05ywj")
+pitch_scale = 1.5
+bus = &"BGM_EndChime"
+playback_type = 1
+
+[node name="DebugHUD" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+
+[node name="Button" type="Button" parent="DebugHUD"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 7.0
+offset_right = 202.0
+offset_bottom = 47.0
+text = "Play main (no drums)"
+
+[node name="Button2" type="Button" parent="DebugHUD"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 68.0
+offset_right = 202.0
+offset_bottom = 108.0
+text = "Play main (drums)"
+
+[node name="Button3" type="Button" parent="DebugHUD"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 135.0
+offset_right = 202.0
+offset_bottom = 175.0
+text = "Play success"
+
+[node name="Button4" type="Button" parent="DebugHUD"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 196.0
+offset_right = 202.0
+offset_bottom = 236.0
+text = "Play defeat"
+
+[connection signal="pressed" from="DebugHUD/Button" to="." method="play_main" binds= [false]]
+[connection signal="pressed" from="DebugHUD/Button2" to="." method="play_main" binds= [true]]
+[connection signal="pressed" from="DebugHUD/Button3" to="." method="play_ending" binds= [true]]
+[connection signal="pressed" from="DebugHUD/Button4" to="." method="play_ending" binds= [false]]

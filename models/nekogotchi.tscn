@@ -1,0 +1,40 @@
+[gd_scene load_steps=4 format=3 uid="uid://buhg6k20kino5"]
+
+[ext_resource type="Script" path="res://scripts/nekogotchi_controller.gd" id="1_6vtfk"]
+[ext_resource type="PackedScene" uid="uid://gwlaut88ndse" path="res://models/Nekogotchi.blend" id="1_xubdf"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_f0w4x"]
+size = Vector3(0.15, 0.075, 0.15)
+
+[node name="Nekogotchi" type="Node3D" node_paths=PackedStringArray("buttons")]
+script = ExtResource("1_6vtfk")
+buttons = [NodePath("Nekogotchi/TamaBase/TamaButtonA"), NodePath("Nekogotchi/TamaBase/TamaButtonB"), NodePath("Nekogotchi/TamaBase/TamaButtonC")]
+
+[node name="Nekogotchi" parent="." instance=ExtResource("1_xubdf")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Nekogotchi/TamaBase/TamaButtonA" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.28074, 0, 0.732662)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Nekogotchi/TamaBase/TamaButtonA/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.275, 0)
+shape = SubResource("BoxShape3D_f0w4x")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Nekogotchi/TamaBase/TamaButtonB" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.774084)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Nekogotchi/TamaBase/TamaButtonB/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.275, 0)
+shape = SubResource("BoxShape3D_f0w4x")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Nekogotchi/TamaBase/TamaButtonC" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.281, 0, 0.733)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Nekogotchi/TamaBase/TamaButtonC/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.275, 0)
+shape = SubResource("BoxShape3D_f0w4x")
+
+[connection signal="input_event" from="Nekogotchi/TamaBase/TamaButtonA/StaticBody3D" to="." method="button_press_3d" binds= [0]]
+[connection signal="input_event" from="Nekogotchi/TamaBase/TamaButtonB/StaticBody3D" to="." method="button_press_3d" binds= [1]]
+[connection signal="input_event" from="Nekogotchi/TamaBase/TamaButtonC/StaticBody3D" to="." method="button_press_3d" binds= [2]]
+
+[editable path="Nekogotchi"]
