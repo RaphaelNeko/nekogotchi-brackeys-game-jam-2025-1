@@ -1,0 +1,148 @@
+[gd_scene load_steps=9 format=3 uid="uid://cdpfkmxtdhgl1"]
+
+[ext_resource type="Texture2D" uid="uid://cmalu4a4tkyfs" path="res://sprites/neko/nekogotchi4.png" id="1_ju6f4"]
+[ext_resource type="Texture2D" uid="uid://biptaodx1r226" path="res://sprites/menu_icons/icon_bath.png" id="2_d5u53"]
+[ext_resource type="Texture2D" uid="uid://br8u0r8n1pmpg" path="res://sprites/menu_icons/icon_scale.png" id="3_wsvc8"]
+[ext_resource type="Texture2D" uid="uid://q7su6a0tobna" path="res://sprites/menu_icons/icon_discipline.png" id="4_ulokx"]
+[ext_resource type="Texture2D" uid="uid://dr8xaqylra3le" path="res://sprites/menu_icons/icon_game.png" id="5_5p1ff"]
+[ext_resource type="Texture2D" uid="uid://4k6nagyxkd07" path="res://sprites/menu_icons/icon_eat.png" id="6_0eegk"]
+[ext_resource type="Texture2D" uid="uid://bw25p4kt240xd" path="res://sprites/menu_icons/icon_lamp.png" id="7_63ku7"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_scrdp"]
+font_size = 50
+
+[node name="Game2D" type="Control"]
+custom_minimum_size = Vector2(512, 512)
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -256.0
+offset_top = -256.0
+offset_right = 256.0
+offset_bottom = 256.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Neko" type="TextureRect" parent="."]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -96.0
+offset_top = -96.0
+offset_right = 96.0
+offset_bottom = 96.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(96, 192)
+texture = ExtResource("1_ju6f4")
+expand_mode = 1
+
+[node name="MenuIconsContainer" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="MenuIconsContainer"]
+custom_minimum_size = Vector2(0, 105)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 105.0
+grow_horizontal = 2
+color = Color(0, 0, 0, 0.313726)
+
+[node name="ColorRect2" type="ColorRect" parent="MenuIconsContainer"]
+custom_minimum_size = Vector2(0, 105)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -105.0
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0, 0, 0, 0.313726)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MenuIconsContainer"]
+custom_minimum_size = Vector2(0, 55)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -79.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 30
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="MenuIconsContainer/HBoxContainer"]
+custom_minimum_size = Vector2(92, 0)
+layout_mode = 2
+texture = ExtResource("2_d5u53")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TextureRect2" type="TextureRect" parent="MenuIconsContainer/HBoxContainer"]
+custom_minimum_size = Vector2(92, 0)
+layout_mode = 2
+texture = ExtResource("3_wsvc8")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TextureRect3" type="TextureRect" parent="MenuIconsContainer/HBoxContainer"]
+custom_minimum_size = Vector2(92, 0)
+layout_mode = 2
+texture = ExtResource("4_ulokx")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TextureRect4" type="TextureRect" parent="MenuIconsContainer/HBoxContainer"]
+custom_minimum_size = Vector2(92, 0)
+layout_mode = 2
+texture = ExtResource("5_5p1ff")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MenuIconsContainer"]
+custom_minimum_size = Vector2(0, 55)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 24.0
+offset_bottom = 79.0
+grow_horizontal = 2
+theme_override_constants/separation = 55
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="MenuIconsContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(92, 0)
+layout_mode = 2
+texture = ExtResource("6_0eegk")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="MenuIconsContainer/HBoxContainer2"]
+layout_mode = 2
+text = "4:14 PM"
+label_settings = SubResource("LabelSettings_scrdp")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRect2" type="TextureRect" parent="MenuIconsContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(92, 0)
+layout_mode = 2
+texture = ExtResource("7_63ku7")
+expand_mode = 1
+stretch_mode = 5

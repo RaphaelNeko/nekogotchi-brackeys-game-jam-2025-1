@@ -43,6 +43,7 @@ enabled=PackedStringArray()
 
 [gui]
 
+common/snap_controls_to_pixels=false
 theme/custom_font="res://fonts/Tiny5/Tiny5-Regular.ttf"
 
 [input]
@@ -67,7 +68,8 @@ tama_button_c={
 
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
-environment/defaults/default_clear_color=Color(0, 0, 0, 0)
+scaling_3d/scale=2.0
+environment/defaults/default_clear_color=Color(0.240778, 0.240778, 0.240778, 0)
 anti_aliasing/quality/msaa_3d=3
 viewport/transparent_background=true
 anti_aliasing/quality/screen_space_aa=1
