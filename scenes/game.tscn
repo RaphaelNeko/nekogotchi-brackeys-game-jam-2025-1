@@ -1,10 +1,12 @@
-[gd_scene load_steps=14 format=3 uid="uid://c8udl3akkft1y"]
+[gd_scene load_steps=16 format=3 uid="uid://c8udl3akkft1y"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_akto4"]
 [ext_resource type="PackedScene" uid="uid://buhg6k20kino5" path="res://models/nekogotchi.tscn" id="1_kmspo"]
 [ext_resource type="Texture2D" uid="uid://cmalu4a4tkyfs" path="res://sprites/neko/nekogotchi4.png" id="2_7lmun"]
 [ext_resource type="PackedScene" uid="uid://cdpfkmxtdhgl1" path="res://scenes/game_2d.tscn" id="2_ph31a"]
 [ext_resource type="Texture2D" uid="uid://bkni0kbhvtsne" path="res://sprites/neko/nekogotchi5.png" id="4_kqvxr"]
+[ext_resource type="Texture2D" uid="uid://cflhyyr1nv4bk" path="res://sprites/test.png" id="6_4fkrv"]
+[ext_resource type="AudioStream" uid="uid://cu6yvwck72sdg" path="res://audios/sfx/device_appear.wav" id="7_cs0g4"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_egll1"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -256,8 +258,8 @@ transform = Transform3D(-0.891872, 0.391427, 0.226602, -0.069786, -0.614108, 0.7
 [node name="TamaChain" parent="Nekogotchi/Nekogotchi/TamaBase/TamaChainHolder/TamaChainBase" index="0"]
 transform = Transform3D(-0.64067, -0.138858, 0.069937, 0.1412, -0.395524, 0.508186, -0.0650782, 0.508831, 0.414108, 0.189389, 1.04386, 0.843364)
 
-[node name="Sprite3D" type="Sprite3D" parent="Nekogotchi/Nekogotchi" index="1"]
-transform = Transform3D(0.19, 0, 3.72529e-09, 0, 0.19, 0, -3.72529e-09, 0, 0.19, 0, 0, 0.230111)
+[node name="Sprite3D" type="Sprite3D" parent="Nekogotchi/Nekogotchi/TamaBase" index="4"]
+transform = Transform3D(0.19, 0, 3.72529e-09, -3.72529e-09, 0, 0.19, 0, -0.19, 0, -3.72529e-09, 0.230111, 0)
 modulate = Color(0, 0, 0, 0.568627)
 shaded = true
 double_sided = false
@@ -270,6 +272,36 @@ transform = Transform3D(0.986286, 0.0143848, 0.16442, 0, 0.996195, -0.0871557, -
 [node name="Camera3D" type="Camera3D" parent="CamRoot"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8)
 fov = 45.0
+
+[node name="HUD" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Test" type="TextureRect" parent="HUD"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -776.5
+offset_top = 408.0
+offset_right = 776.5
+offset_bottom = 2560.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_4fkrv")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="DeviceAppear" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_cs0g4")
 
 [editable path="Nekogotchi"]
 [editable path="Nekogotchi/Nekogotchi"]

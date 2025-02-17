@@ -6,19 +6,21 @@ extends Node
 
 func _ready() -> void:
 	Speaker.player.volume_db = -80.0
+	await get_tree().create_timer(1).timeout
+	$DeviceAppear.play()
 	var tween: Tween = get_tree().create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_QUINT)
 	tween.tween_property(nekogotchi, "rotation:y", 0.0, 2.0)
 	await tween.parallel().tween_property(nekogotchi, "position:y", 0.0, 2.0).finished
 	Speaker.player.volume_db = 0.0
-	nekogotchi.button_a_pressed.connect(play_intro)
-	nekogotchi.button_b_pressed.connect(play_intro)
-	nekogotchi.button_c_pressed.connect(play_intro)
+	nekogotchi.battery_holder_removed.connect(play_intro)
+	# await get_tree().create_timer(20).timeout
+	# tween = get_tree().create_tween()
+	# tween.tween_property($HUD/Test, "position:y", -100.0, 10)
+	# tween.tween_property($HUD/Test, "position:y", 2200.0, 15).set_delay(10)
 
 	
 func play_intro() -> void:
-	nekogotchi.button_a_pressed.disconnect(play_intro)
-	nekogotchi.button_b_pressed.disconnect(play_intro)
-	nekogotchi.button_c_pressed.disconnect(play_intro)
+	nekogotchi.battery_holder_removed.disconnect(play_intro)
 	Speaker.intro_song()
 	intro_animation.play("intro")
 	intro_animation.animation_finished.connect(start_game)

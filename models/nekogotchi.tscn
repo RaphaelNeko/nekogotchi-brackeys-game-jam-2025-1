@@ -1,10 +1,14 @@
-[gd_scene load_steps=7 format=3 uid="uid://buhg6k20kino5"]
+[gd_scene load_steps=9 format=3 uid="uid://buhg6k20kino5"]
 
 [ext_resource type="Script" path="res://scripts/nekogotchi_controller.gd" id="1_6vtfk"]
 [ext_resource type="PackedScene" uid="uid://gwlaut88ndse" path="res://models/Nekogotchi.blend" id="1_xubdf"]
+[ext_resource type="Texture2D" uid="uid://c0gwu0pk8hosx" path="res://sprites/battery_holder_arrow.png" id="3_ub7c5"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_f0w4x"]
 size = Vector3(0.25, 0.075, 0.25)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_a6ti3"]
+size = Vector3(0.727417, 0.0439453, 0.351563)
 
 [sub_resource type="Animation" id="Animation_hc4yg"]
 length = 0.001
@@ -140,9 +144,10 @@ _data = {
 "loop": SubResource("Animation_1mrhi")
 }
 
-[node name="Nekogotchi" type="Node3D" node_paths=PackedStringArray("buttons")]
+[node name="Nekogotchi" type="Node3D" node_paths=PackedStringArray("buttons", "battery_holder")]
 script = ExtResource("1_6vtfk")
 buttons = [NodePath("Nekogotchi/TamaBase/TamaButtonA"), NodePath("Nekogotchi/TamaBase/TamaButtonB"), NodePath("Nekogotchi/TamaBase/TamaButtonC")]
+battery_holder = NodePath("Nekogotchi/BatteryHolder")
 
 [node name="Nekogotchi" parent="." instance=ExtResource("1_xubdf")]
 
@@ -173,6 +178,21 @@ transform = Transform3D(-0.891872, 0.391427, 0.226602, -0.069786, -0.614108, 0.7
 [node name="TamaChain" parent="Nekogotchi/TamaBase/TamaChainHolder/TamaChainBase" index="0"]
 transform = Transform3D(-0.64067, -0.138858, 0.069937, 0.1412, -0.395524, 0.508186, -0.0650782, 0.508831, 0.414108, 0.189389, 1.04386, 0.843364)
 
+[node name="BatteryHolder" parent="Nekogotchi" index="1"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+
+[node name="Sprite3D" type="Sprite3D" parent="Nekogotchi/BatteryHolder" index="0"]
+transform = Transform3D(0.998783, -0.0493236, 0.000326321, -0.000326186, -0.0132163, -0.999912, 0.0493236, 0.998695, -0.0132163, 1.50908, -0.00025183, 0.273512)
+pixel_size = 0.0005
+shaded = true
+texture = ExtResource("3_ub7c5")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Nekogotchi/BatteryHolder" index="1"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Nekogotchi/BatteryHolder/StaticBody3D"]
+transform = Transform3D(0.99633, 0.0426255, -0.0742324, -0.0425077, 0.999091, 0.00316707, 0.0742999, 0, 0.997236, 1.23578, 0.0350439, 0.261224)
+shape = SubResource("BoxShape3D_a6ti3")
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_ijgu5")
@@ -182,5 +202,7 @@ autoplay = "loop"
 [connection signal="input_event" from="Nekogotchi/TamaBase/TamaButtonA/StaticBody3D" to="." method="button_press_3d" binds= [0]]
 [connection signal="input_event" from="Nekogotchi/TamaBase/TamaButtonB/StaticBody3D" to="." method="button_press_3d" binds= [1]]
 [connection signal="input_event" from="Nekogotchi/TamaBase/TamaButtonC/StaticBody3D" to="." method="button_press_3d" binds= [2]]
+[connection signal="input_event" from="Nekogotchi/BatteryHolder/StaticBody3D" to="." method="battery_holder_input_event"]
+[connection signal="mouse_exited" from="Nekogotchi/BatteryHolder/StaticBody3D" to="." method="battery_holder_cancel"]
 
 [editable path="Nekogotchi"]
