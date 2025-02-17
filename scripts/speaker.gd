@@ -16,6 +16,15 @@ func sfx_beep() -> void:
 func sfx_confirm() -> void:
 	play_sfx(3)
 
+func sfx_game_start() -> void:
+	play_sfx(4)
+
+func sfx_game_win() -> void:
+	play_sfx(5)
+
+func sfx_game_lose() -> void:
+	play_sfx(6)
+
 func play_sfx(sfxID: int):
 	if player.stream == sfx[0] and player.playing:
 		return

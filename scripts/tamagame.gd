@@ -1,17 +1,41 @@
 extends Control
 
+@export var stats: TamaStats
+
+@export_category("Device Reference")
 @export var nekogotchi_device: Node3D
 
+@export var neko_anim: AnimationPlayer
+
+@export_category("CHOOSE YOUR NEKO SCREEN")
 @export var screen_choose_neko: Control
-@export var screen_main: Control
 
 var choose_neko_selected: int = 0
 
+
+@export_category("MAIN SCREEN")
+@export var screen_main: Control
+@export var screen_menu_icons: Control
 @export var main_menu_icons: Array[TextureRect]
 var selected_main_menu_icon: int = -1
 
+@export var main_menu_time_label: Label
+@export var neko_speech_label: Label
 
 
+@export_category("Sleep References")
+var is_lights_off: bool = false
+@export var sleep_background: Control
+@export var no_sleep_overlay: Control
+
+
+@export_category("STATS VIEWER")
+@export var screen_stats_viewer: Control
+
+
+var time_hour: int = 1
+var time_minute: int = 27
+var time_is_pm: bool = true
 
 
 var game_state: GameStateType = GameStateType.INTRO
@@ -24,6 +48,7 @@ enum GameStateType {
 
 func _ready() -> void:
 	screen_main.visible = false
+	screen_menu_icons.visible = false
 	screen_choose_neko.visible = true
 
 func game_start() -> void:
@@ -59,12 +84,11 @@ func choose_neko_confirm() -> void:
 	await get_tree().create_timer(1).timeout
 	screen_choose_neko.visible = false
 	await get_tree().create_timer(1).timeout
+	refresh_time()
 	screen_main.visible = true
+	screen_menu_icons.visible = true
 	Speaker.sfx_alert()
-	nekogotchi_device.button_a_pressed.connect(main_select_next_icon)
-	nekogotchi_device.button_b_pressed.connect(main_press_icon)
-	nekogotchi_device.button_c_pressed.connect(main_unselect_icon)
-
+	connect_buttons_to_main_icons()
 
 func main_select_next_icon() -> void:
 	if selected_main_menu_icon != -1:
@@ -85,3 +109,73 @@ func main_press_icon() -> void:
 	if selected_main_menu_icon == -1:
 		return
 	Speaker.sfx_confirm()
+	match selected_main_menu_icon:
+		1:
+			toggle_lights()
+		3:
+			stats_viewer_visibility(true)
+
+
+func connect_buttons_to_main_icons() -> void:
+	nekogotchi_device.button_a_pressed.connect(main_select_next_icon)
+	nekogotchi_device.button_b_pressed.connect(main_press_icon)
+	nekogotchi_device.button_c_pressed.connect(main_unselect_icon)
+
+func disconnect_buttons_to_main_icons() -> void:
+	nekogotchi_device.button_a_pressed.disconnect(main_select_next_icon)
+	nekogotchi_device.button_b_pressed.disconnect(main_press_icon)
+	nekogotchi_device.button_c_pressed.disconnect(main_unselect_icon)
+
+
+func toggle_lights() -> void:
+	set_neko_speech()
+	is_lights_off = !is_lights_off
+	sleep_background.visible = is_lights_off
+	no_sleep_overlay.visible = stats.energy > 0.15
+	neko_anim.play(("sleep_not_tired" if no_sleep_overlay.visible else "sleep") if is_lights_off else "idle")
+	if is_lights_off and stats.energy > 0.15:
+		Speaker.sfx_game_lose()
+		set_neko_speech("Don't wanna sleep!!")
+
+func stats_viewer_visibility(visibility: bool) -> void:
+	screen_stats_viewer.visible = visibility
+	screen_main.visible = !visibility
+	if visibility:
+		disconnect_buttons_to_main_icons()
+		Speaker.sfx_confirm()
+		nekogotchi_device.button_a_pressed.connect(stats_viewer_next)
+		nekogotchi_device.button_b_pressed.connect(stats_viewer_next)
+		nekogotchi_device.button_c_pressed.connect(stats_viewer_visibility.bind(false))
+	else:
+		Speaker.sfx_beep()
+		nekogotchi_device.button_a_pressed.disconnect(stats_viewer_next)
+		nekogotchi_device.button_b_pressed.disconnect(stats_viewer_next)
+		nekogotchi_device.button_c_pressed.disconnect(stats_viewer_visibility.bind(false))
+		connect_buttons_to_main_icons()
+
+func stats_viewer_next() -> void:
+	Speaker.sfx_confirm()
+	screen_stats_viewer.get_child(1).visible = !screen_stats_viewer.get_child(1).visible
+	screen_stats_viewer.get_child(0).visible = !screen_stats_viewer.get_child(1).visible
+
+
+func set_neko_speech(speech: String = ""):
+	neko_speech_label.visible = speech != ""
+	neko_speech_label.text = speech
+
+
+func refresh_time() -> void:
+	time_minute += 1
+	if time_minute >= 60:
+		time_minute = 0
+		time_hour += 1
+		if time_hour > 12:
+			time_hour = 1
+			time_is_pm = !time_is_pm
+	main_menu_time_label.text = str(time_hour, ":", "0" if time_minute <= 9 else "", time_minute, " PM" if time_is_pm else " AM")
+	await get_tree().create_timer(1).timeout
+	refresh_time()
+
+func _process(_delta: float) -> void:
+	if OS.is_debug_build() and Input.is_action_just_pressed("ui_focus_next") and game_state != GameStateType.INTRO:
+		time_minute += 10

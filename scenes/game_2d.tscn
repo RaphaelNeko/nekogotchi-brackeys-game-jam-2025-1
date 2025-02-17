@@ -1,25 +1,197 @@
-[gd_scene load_steps=12 format=3 uid="uid://cdpfkmxtdhgl1"]
+[gd_scene load_steps=29 format=3 uid="uid://cdpfkmxtdhgl1"]
 
 [ext_resource type="Script" path="res://scripts/tamagame.gd" id="1_fs36l"]
 [ext_resource type="Texture2D" uid="uid://biptaodx1r226" path="res://sprites/menu_icons/icon_bath.png" id="2_d5u53"]
+[ext_resource type="Script" path="res://scripts/tama_stats.gd" id="2_erxip"]
+[ext_resource type="Texture2D" uid="uid://clpefkdst6rkl" path="res://sprites/sleep_frames/sleep_frame_1.png" id="2_fe7t7"]
 [ext_resource type="Texture2D" uid="uid://fe73hnpyi5ib" path="res://sprites/neko/nekogotchi1.png" id="2_olc20"]
+[ext_resource type="Texture2D" uid="uid://cmlsksudmxt88" path="res://sprites/sleep_frames/sleep_frame_2.png" id="3_a4dp5"]
+[ext_resource type="Texture2D" uid="uid://44om4nfyn7u1" path="res://sprites/neko/nekogotchi7.png" id="3_c4xy7"]
 [ext_resource type="Texture2D" uid="uid://br8u0r8n1pmpg" path="res://sprites/menu_icons/icon_scale.png" id="3_wsvc8"]
+[ext_resource type="Texture2D" uid="uid://dtb85wks0rgea" path="res://sprites/sleep_frames/sleep_frame_3.png" id="4_cq866"]
 [ext_resource type="Texture2D" uid="uid://q7su6a0tobna" path="res://sprites/menu_icons/icon_discipline.png" id="4_ulokx"]
 [ext_resource type="Texture2D" uid="uid://dr8xaqylra3le" path="res://sprites/menu_icons/icon_game.png" id="5_5p1ff"]
 [ext_resource type="Texture2D" uid="uid://4k6nagyxkd07" path="res://sprites/menu_icons/icon_eat.png" id="6_0eegk"]
 [ext_resource type="Texture2D" uid="uid://bw25p4kt240xd" path="res://sprites/menu_icons/icon_lamp.png" id="7_63ku7"]
+[ext_resource type="Texture2D" uid="uid://dmshtmbogy7jr" path="res://sprites/neko/nekogotchi2.png" id="7_rblyx"]
+[ext_resource type="Texture2D" uid="uid://b46qtl5dfmysl" path="res://sprites/neko/nekogotchi3.png" id="8_inltq"]
+[ext_resource type="Texture2D" uid="uid://c413nbsf0j4wv" path="res://sprites/neko/nekogotchi6.png" id="10_x73i5"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_dr7p6"]
-font_size = 50
-font_color = Color(0, 0, 0, 1)
+[sub_resource type="Resource" id="Resource_j01xh"]
+script = ExtResource("2_erxip")
+energy = 1.0
+hunger = 1.0
+fun = 1.0
+age = 0
 
 [sub_resource type="LabelSettings" id="LabelSettings_scrdp"]
 font_size = 50
 font_color = Color(0, 0, 0, 1)
 
+[sub_resource type="Animation" id="Animation_1w7ql"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_fe7t7")]
+}
+
+[sub_resource type="Animation" id="Animation_adesl"]
+resource_name = "sleeping_zzz"
+length = 1.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [ExtResource("2_fe7t7"), ExtResource("3_a4dp5"), ExtResource("4_cq866")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_cpr8g"]
+_data = {
+"RESET": SubResource("Animation_1w7ql"),
+"sleeping_zzz": SubResource("Animation_adesl")
+}
+
+[sub_resource type="Animation" id="Animation_vi3xu"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_olc20")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:flip_h")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_dnjny"]
+resource_name = "idle"
+length = 8.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3, 3.4, 3.6, 4, 5, 6, 7, 7.4, 7.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("2_olc20"), ExtResource("7_rblyx"), ExtResource("2_olc20"), ExtResource("7_rblyx"), ExtResource("8_inltq"), ExtResource("7_rblyx"), ExtResource("2_olc20"), ExtResource("7_rblyx"), ExtResource("2_olc20"), ExtResource("7_rblyx"), ExtResource("8_inltq"), ExtResource("7_rblyx")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:flip_h")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2.43333, 4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+
+[sub_resource type="Animation" id="Animation_nkbcx"]
+resource_name = "sleep"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("3_c4xy7")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:flip_h")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_3vsrf"]
+resource_name = "sleep_not_tired"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("10_x73i5")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:flip_h")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_v7a03"]
+_data = {
+"RESET": SubResource("Animation_vi3xu"),
+"idle": SubResource("Animation_dnjny"),
+"sleep": SubResource("Animation_nkbcx"),
+"sleep_not_tired": SubResource("Animation_3vsrf")
+}
+
+[sub_resource type="LabelSettings" id="LabelSettings_dr7p6"]
+font_size = 50
+font_color = Color(0, 0, 0, 1)
+
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_108bk"]
 
-[node name="Game2D" type="Control" node_paths=PackedStringArray("screen_choose_neko", "screen_main", "main_menu_icons")]
+[node name="Game2D" type="Control" node_paths=PackedStringArray("neko_anim", "screen_choose_neko", "screen_main", "screen_menu_icons", "main_menu_icons", "main_menu_time_label", "neko_speech_label", "sleep_background", "no_sleep_overlay", "screen_stats_viewer")]
 custom_minimum_size = Vector2(512, 512)
 layout_mode = 3
 anchors_preset = 8
@@ -34,9 +206,127 @@ offset_bottom = 256.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_fs36l")
+stats = SubResource("Resource_j01xh")
+neko_anim = NodePath("Main/Neko/NekoAnim")
 screen_choose_neko = NodePath("ChooseYourNeko")
 screen_main = NodePath("Main")
-main_menu_icons = [NodePath("Main/MenuIconsContainer/TopIcons/Food"), NodePath("Main/MenuIconsContainer/TopIcons/Light"), NodePath("Main/MenuIconsContainer/BottomIcons/Bath"), NodePath("Main/MenuIconsContainer/BottomIcons/Scale"), NodePath("Main/MenuIconsContainer/BottomIcons/Discipline"), NodePath("Main/MenuIconsContainer/BottomIcons/Game")]
+screen_menu_icons = NodePath("MenuIconsContainer")
+main_menu_icons = [NodePath("MenuIconsContainer/TopIcons/Food"), NodePath("MenuIconsContainer/TopIcons/Light"), NodePath("MenuIconsContainer/BottomIcons/Bath"), NodePath("MenuIconsContainer/BottomIcons/Scale"), NodePath("MenuIconsContainer/BottomIcons/Discipline"), NodePath("MenuIconsContainer/BottomIcons/Game")]
+main_menu_time_label = NodePath("MenuIconsContainer/TopIcons/Time")
+neko_speech_label = NodePath("Main/NekoSpeech")
+sleep_background = NodePath("Main/SleepBackground")
+no_sleep_overlay = NodePath("Main/SleepBackground/NoSleep")
+screen_stats_viewer = NodePath("StatsViewer")
+
+[node name="MenuIconsContainer" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TopBar" type="ColorRect" parent="MenuIconsContainer"]
+custom_minimum_size = Vector2(0, 105)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 105.0
+grow_horizontal = 2
+color = Color(0, 0, 0, 0.313726)
+
+[node name="BottomBar" type="ColorRect" parent="MenuIconsContainer"]
+custom_minimum_size = Vector2(0, 105)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -105.0
+grow_horizontal = 2
+grow_vertical = 0
+color = Color(0, 0, 0, 0.313726)
+
+[node name="TopIcons" type="HBoxContainer" parent="MenuIconsContainer"]
+custom_minimum_size = Vector2(0, 55)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 24.0
+offset_bottom = 81.0
+grow_horizontal = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="Food" type="TextureRect" parent="MenuIconsContainer/TopIcons"]
+modulate = Color(1, 1, 1, 0.301961)
+custom_minimum_size = Vector2(92, 0)
+layout_mode = 2
+texture = ExtResource("6_0eegk")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Time" type="Label" parent="MenuIconsContainer/TopIcons"]
+custom_minimum_size = Vector2(260, 0)
+layout_mode = 2
+text = "4:14 PM"
+label_settings = SubResource("LabelSettings_scrdp")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Light" type="TextureRect" parent="MenuIconsContainer/TopIcons"]
+modulate = Color(1, 1, 1, 0.301961)
+custom_minimum_size = Vector2(92, 0)
+layout_mode = 2
+texture = ExtResource("7_63ku7")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="BottomIcons" type="HBoxContainer" parent="MenuIconsContainer"]
+custom_minimum_size = Vector2(0, 55)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -79.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 30
+alignment = 1
+
+[node name="Bath" type="TextureRect" parent="MenuIconsContainer/BottomIcons"]
+modulate = Color(1, 1, 1, 0.301961)
+custom_minimum_size = Vector2(92, 0)
+layout_mode = 2
+texture = ExtResource("2_d5u53")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Scale" type="TextureRect" parent="MenuIconsContainer/BottomIcons"]
+modulate = Color(1, 1, 1, 0.301961)
+custom_minimum_size = Vector2(92, 0)
+layout_mode = 2
+texture = ExtResource("3_wsvc8")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Discipline" type="TextureRect" parent="MenuIconsContainer/BottomIcons"]
+modulate = Color(1, 1, 1, 0.301961)
+custom_minimum_size = Vector2(92, 0)
+layout_mode = 2
+texture = ExtResource("4_ulokx")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Game" type="TextureRect" parent="MenuIconsContainer/BottomIcons"]
+modulate = Color(1, 1, 1, 0.301961)
+custom_minimum_size = Vector2(92, 0)
+layout_mode = 2
+texture = ExtResource("5_5p1ff")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="Main" type="Control" parent="."]
 layout_mode = 1
@@ -45,6 +335,105 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="SleepBackground" type="Control" parent="Main"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="NoSleep" type="ColorRect" parent="Main/SleepBackground"]
+visible = false
+custom_minimum_size = Vector2(192, 192)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 96.0
+offset_top = -64.0
+offset_right = 288.0
+offset_bottom = 128.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="SleepZ" type="TextureRect" parent="Main/SleepBackground"]
+texture_filter = 1
+custom_minimum_size = Vector2(192, 192)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 96.0
+offset_top = -64.0
+offset_right = 288.0
+offset_bottom = 128.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_fe7t7")
+expand_mode = 1
+
+[node name="SleepZAnim" type="AnimationPlayer" parent="Main/SleepBackground/SleepZ"]
+libraries = {
+"": SubResource("AnimationLibrary_cpr8g")
+}
+autoplay = "sleeping_zzz"
+playback_auto_capture = false
+
+[node name="Black" type="ColorRect" parent="Main/SleepBackground"]
+custom_minimum_size = Vector2(192, 192)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -288.0
+offset_top = -64.0
+offset_right = -96.0
+offset_bottom = 128.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Black2" type="ColorRect" parent="Main/SleepBackground"]
+custom_minimum_size = Vector2(512, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -256.0
+offset_top = 128.0
+offset_right = 256.0
+offset_bottom = 151.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Black3" type="ColorRect" parent="Main/SleepBackground"]
+custom_minimum_size = Vector2(512, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -256.0
+offset_top = -84.0
+offset_right = 256.0
+offset_bottom = -64.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
 
 [node name="Neko" type="TextureRect" parent="Main"]
 texture_filter = 1
@@ -64,7 +453,15 @@ pivot_offset = Vector2(96, 192)
 texture = ExtResource("2_olc20")
 expand_mode = 1
 
+[node name="NekoAnim" type="AnimationPlayer" parent="Main/Neko"]
+libraries = {
+"": SubResource("AnimationLibrary_v7a03")
+}
+autoplay = "idle"
+playback_auto_capture = false
+
 [node name="NekoSpeech" type="Label" parent="Main"]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -127,7 +524,8 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.313726)
 
-[node name="MenuIconsContainer" type="Control" parent="Main"]
+[node name="StatsViewer" type="Control" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -135,106 +533,66 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TopBar" type="ColorRect" parent="Main/MenuIconsContainer"]
-custom_minimum_size = Vector2(0, 105)
+[node name="Screen1" type="VBoxContainer" parent="StatsViewer"]
 layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 105.0
-grow_horizontal = 2
-color = Color(0, 0, 0, 0.313726)
-
-[node name="BottomBar" type="ColorRect" parent="Main/MenuIconsContainer"]
-custom_minimum_size = Vector2(0, 105)
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -105.0
+offset_left = 39.0
+offset_right = -39.0
 grow_horizontal = 2
-grow_vertical = 0
-color = Color(0, 0, 0, 0.313726)
-
-[node name="TopIcons" type="HBoxContainer" parent="Main/MenuIconsContainer"]
-custom_minimum_size = Vector2(0, 55)
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_top = 24.0
-offset_bottom = 81.0
-grow_horizontal = 2
-theme_override_constants/separation = 55
+grow_vertical = 2
+theme_override_constants/separation = 50
 alignment = 1
 
-[node name="Food" type="TextureRect" parent="Main/MenuIconsContainer/TopIcons"]
-modulate = Color(1, 1, 1, 0.301961)
-custom_minimum_size = Vector2(92, 0)
+[node name="Energy" type="Label" parent="StatsViewer/Screen1"]
 layout_mode = 2
-texture = ExtResource("6_0eegk")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Time" type="Label" parent="Main/MenuIconsContainer/TopIcons"]
-layout_mode = 2
-text = "4:14 PM"
-label_settings = SubResource("LabelSettings_scrdp")
-horizontal_alignment = 1
+text = "ENERGY"
+label_settings = SubResource("LabelSettings_dr7p6")
 vertical_alignment = 1
 
-[node name="Light" type="TextureRect" parent="Main/MenuIconsContainer/TopIcons"]
-modulate = Color(1, 1, 1, 0.301961)
-custom_minimum_size = Vector2(92, 0)
+[node name="Hunger" type="Label" parent="StatsViewer/Screen1"]
 layout_mode = 2
-texture = ExtResource("7_63ku7")
-expand_mode = 1
-stretch_mode = 5
+text = "HUNGER"
+label_settings = SubResource("LabelSettings_dr7p6")
+vertical_alignment = 1
 
-[node name="BottomIcons" type="HBoxContainer" parent="Main/MenuIconsContainer"]
-custom_minimum_size = Vector2(0, 55)
+[node name="Screen2" type="VBoxContainer" parent="StatsViewer"]
+visible = false
 layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -79.0
-offset_bottom = -24.0
+offset_left = 39.0
+offset_right = -39.0
 grow_horizontal = 2
-grow_vertical = 0
-theme_override_constants/separation = 30
+grow_vertical = 2
+theme_override_constants/separation = 50
 alignment = 1
 
-[node name="Bath" type="TextureRect" parent="Main/MenuIconsContainer/BottomIcons"]
-modulate = Color(1, 1, 1, 0.301961)
-custom_minimum_size = Vector2(92, 0)
+[node name="Fun" type="Label" parent="StatsViewer/Screen2"]
 layout_mode = 2
-texture = ExtResource("2_d5u53")
-expand_mode = 1
-stretch_mode = 5
+text = "FUN"
+label_settings = SubResource("LabelSettings_dr7p6")
+vertical_alignment = 1
 
-[node name="Scale" type="TextureRect" parent="Main/MenuIconsContainer/BottomIcons"]
-modulate = Color(1, 1, 1, 0.301961)
-custom_minimum_size = Vector2(92, 0)
+[node name="Age" type="Label" parent="StatsViewer/Screen2"]
 layout_mode = 2
-texture = ExtResource("3_wsvc8")
-expand_mode = 1
-stretch_mode = 5
+text = "AGE"
+label_settings = SubResource("LabelSettings_dr7p6")
+vertical_alignment = 1
 
-[node name="Discipline" type="TextureRect" parent="Main/MenuIconsContainer/BottomIcons"]
-modulate = Color(1, 1, 1, 0.301961)
-custom_minimum_size = Vector2(92, 0)
-layout_mode = 2
-texture = ExtResource("4_ulokx")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Game" type="TextureRect" parent="Main/MenuIconsContainer/BottomIcons"]
-modulate = Color(1, 1, 1, 0.301961)
-custom_minimum_size = Vector2(92, 0)
-layout_mode = 2
-texture = ExtResource("5_5p1ff")
-expand_mode = 1
-stretch_mode = 5
+[node name="Value" type="Label" parent="StatsViewer/Screen2/Age"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "0"
+label_settings = SubResource("LabelSettings_dr7p6")
+horizontal_alignment = 2
+vertical_alignment = 1
 
 [node name="ChooseYourNeko" type="Control" parent="."]
 visible = false
