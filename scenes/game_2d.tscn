@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://cdpfkmxtdhgl1"]
+[gd_scene load_steps=12 format=3 uid="uid://cdpfkmxtdhgl1"]
 
 [ext_resource type="Script" path="res://scripts/tamagame.gd" id="1_fs36l"]
 [ext_resource type="Texture2D" uid="uid://biptaodx1r226" path="res://sprites/menu_icons/icon_bath.png" id="2_d5u53"]
@@ -17,7 +17,9 @@ font_color = Color(0, 0, 0, 1)
 font_size = 50
 font_color = Color(0, 0, 0, 1)
 
-[node name="Game2D" type="Control"]
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_108bk"]
+
+[node name="Game2D" type="Control" node_paths=PackedStringArray("screen_choose_neko", "screen_main", "main_menu_icons")]
 custom_minimum_size = Vector2(512, 512)
 layout_mode = 3
 anchors_preset = 8
@@ -32,8 +34,19 @@ offset_bottom = 256.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_fs36l")
+screen_choose_neko = NodePath("ChooseYourNeko")
+screen_main = NodePath("Main")
+main_menu_icons = [NodePath("Main/MenuIconsContainer/TopIcons/Food"), NodePath("Main/MenuIconsContainer/TopIcons/Light"), NodePath("Main/MenuIconsContainer/BottomIcons/Bath"), NodePath("Main/MenuIconsContainer/BottomIcons/Scale"), NodePath("Main/MenuIconsContainer/BottomIcons/Discipline"), NodePath("Main/MenuIconsContainer/BottomIcons/Game")]
 
-[node name="Neko" type="TextureRect" parent="."]
+[node name="Main" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Neko" type="TextureRect" parent="Main"]
 texture_filter = 1
 layout_mode = 1
 anchors_preset = 8
@@ -51,7 +64,7 @@ pivot_offset = Vector2(96, 192)
 texture = ExtResource("2_olc20")
 expand_mode = 1
 
-[node name="NekoSpeech" type="Label" parent="."]
+[node name="NekoSpeech" type="Label" parent="Main"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -69,7 +82,7 @@ label_settings = SubResource("LabelSettings_dr7p6")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ColorRect" type="ColorRect" parent="NekoSpeech"]
+[node name="ColorRect" type="ColorRect" parent="Main/NekoSpeech"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -84,7 +97,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.313726)
 
-[node name="ColorRect2" type="ColorRect" parent="NekoSpeech"]
+[node name="ColorRect2" type="ColorRect" parent="Main/NekoSpeech"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -99,7 +112,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.313726)
 
-[node name="ColorRect3" type="ColorRect" parent="NekoSpeech"]
+[node name="ColorRect3" type="ColorRect" parent="Main/NekoSpeech"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -114,7 +127,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.313726)
 
-[node name="MenuIconsContainer" type="Control" parent="."]
+[node name="MenuIconsContainer" type="Control" parent="Main"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -122,7 +135,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TopBar" type="ColorRect" parent="MenuIconsContainer"]
+[node name="TopBar" type="ColorRect" parent="Main/MenuIconsContainer"]
 custom_minimum_size = Vector2(0, 105)
 layout_mode = 1
 anchors_preset = 10
@@ -131,7 +144,7 @@ offset_bottom = 105.0
 grow_horizontal = 2
 color = Color(0, 0, 0, 0.313726)
 
-[node name="BottomBar" type="ColorRect" parent="MenuIconsContainer"]
+[node name="BottomBar" type="ColorRect" parent="Main/MenuIconsContainer"]
 custom_minimum_size = Vector2(0, 105)
 layout_mode = 1
 anchors_preset = 12
@@ -143,7 +156,7 @@ grow_horizontal = 2
 grow_vertical = 0
 color = Color(0, 0, 0, 0.313726)
 
-[node name="TopIcons" type="HBoxContainer" parent="MenuIconsContainer"]
+[node name="TopIcons" type="HBoxContainer" parent="Main/MenuIconsContainer"]
 custom_minimum_size = Vector2(0, 55)
 layout_mode = 1
 anchors_preset = 10
@@ -154,28 +167,30 @@ grow_horizontal = 2
 theme_override_constants/separation = 55
 alignment = 1
 
-[node name="Food" type="TextureRect" parent="MenuIconsContainer/TopIcons"]
+[node name="Food" type="TextureRect" parent="Main/MenuIconsContainer/TopIcons"]
+modulate = Color(1, 1, 1, 0.301961)
 custom_minimum_size = Vector2(92, 0)
 layout_mode = 2
 texture = ExtResource("6_0eegk")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Time" type="Label" parent="MenuIconsContainer/TopIcons"]
+[node name="Time" type="Label" parent="Main/MenuIconsContainer/TopIcons"]
 layout_mode = 2
 text = "4:14 PM"
 label_settings = SubResource("LabelSettings_scrdp")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Light" type="TextureRect" parent="MenuIconsContainer/TopIcons"]
+[node name="Light" type="TextureRect" parent="Main/MenuIconsContainer/TopIcons"]
+modulate = Color(1, 1, 1, 0.301961)
 custom_minimum_size = Vector2(92, 0)
 layout_mode = 2
 texture = ExtResource("7_63ku7")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="BottomIcons" type="HBoxContainer" parent="MenuIconsContainer"]
+[node name="BottomIcons" type="HBoxContainer" parent="Main/MenuIconsContainer"]
 custom_minimum_size = Vector2(0, 55)
 layout_mode = 1
 anchors_preset = 12
@@ -189,30 +204,201 @@ grow_vertical = 0
 theme_override_constants/separation = 30
 alignment = 1
 
-[node name="Bath" type="TextureRect" parent="MenuIconsContainer/BottomIcons"]
+[node name="Bath" type="TextureRect" parent="Main/MenuIconsContainer/BottomIcons"]
+modulate = Color(1, 1, 1, 0.301961)
 custom_minimum_size = Vector2(92, 0)
 layout_mode = 2
 texture = ExtResource("2_d5u53")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Scale" type="TextureRect" parent="MenuIconsContainer/BottomIcons"]
+[node name="Scale" type="TextureRect" parent="Main/MenuIconsContainer/BottomIcons"]
+modulate = Color(1, 1, 1, 0.301961)
 custom_minimum_size = Vector2(92, 0)
 layout_mode = 2
 texture = ExtResource("3_wsvc8")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Discipline" type="TextureRect" parent="MenuIconsContainer/BottomIcons"]
+[node name="Discipline" type="TextureRect" parent="Main/MenuIconsContainer/BottomIcons"]
+modulate = Color(1, 1, 1, 0.301961)
 custom_minimum_size = Vector2(92, 0)
 layout_mode = 2
 texture = ExtResource("4_ulokx")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Game" type="TextureRect" parent="MenuIconsContainer/BottomIcons"]
+[node name="Game" type="TextureRect" parent="Main/MenuIconsContainer/BottomIcons"]
+modulate = Color(1, 1, 1, 0.301961)
 custom_minimum_size = Vector2(92, 0)
 layout_mode = 2
 texture = ExtResource("5_5p1ff")
 expand_mode = 1
 stretch_mode = 5
+
+[node name="ChooseYourNeko" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TopBar" type="ColorRect" parent="ChooseYourNeko"]
+custom_minimum_size = Vector2(0, 105)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 105.0
+grow_horizontal = 2
+color = Color(0, 0, 0, 0.313726)
+
+[node name="Time" type="Label" parent="ChooseYourNeko/TopBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Choose an egg"
+label_settings = SubResource("LabelSettings_scrdp")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Arrow" type="Control" parent="ChooseYourNeko"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -227.0
+offset_top = 64.0
+offset_right = -99.0
+offset_bottom = 192.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="ChooseYourNeko/Arrow"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 8.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="ColorRect2" type="ColorRect" parent="ChooseYourNeko/Arrow"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -24.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="ColorRect3" type="ColorRect" parent="ChooseYourNeko/Arrow"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = 24.0
+offset_right = -24.0
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="ColorRect4" type="ColorRect" parent="ChooseYourNeko/Arrow"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 24.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="ColorRect5" type="ColorRect" parent="ChooseYourNeko/Arrow"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 40.0
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="EggsContainer" type="Control" parent="ChooseYourNeko"]
+custom_minimum_size = Vector2(512, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -256.0
+offset_top = -64.0
+offset_right = 256.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Egg1" type="TextureRect" parent="ChooseYourNeko/EggsContainer"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+offset_left = 29.0
+offset_right = 157.0
+offset_bottom = 128.0
+texture = SubResource("PlaceholderTexture2D_108bk")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Egg2" type="TextureRect" parent="ChooseYourNeko/EggsContainer"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+offset_left = 192.0
+offset_right = 320.0
+offset_bottom = 128.0
+texture = SubResource("PlaceholderTexture2D_108bk")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Egg3" type="TextureRect" parent="ChooseYourNeko/EggsContainer"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+offset_left = 355.0
+offset_right = 483.0
+offset_bottom = 128.0
+texture = SubResource("PlaceholderTexture2D_108bk")
+expand_mode = 1
+stretch_mode = 5
+
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]

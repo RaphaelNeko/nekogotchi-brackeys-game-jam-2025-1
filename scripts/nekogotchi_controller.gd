@@ -19,7 +19,6 @@ func _input(event: InputEvent) -> void:
 
 
 func button_press(buttonID: int) -> void:
-	Speaker.sfx_beep()
 	match buttonID:
 		0:
 			if (tween_a):
