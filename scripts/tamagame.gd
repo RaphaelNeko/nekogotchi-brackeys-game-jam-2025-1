@@ -43,6 +43,9 @@ var wanna_sleep: bool = false
 @export var screen_stats_viewer: Control
 @export var stats_bar_sprites: Array[CompressedTexture2D]
 
+@export_category("MINIGAME")
+@export var screen_minigame: Control
+
 
 var time_hour: int = 1
 var time_minute: int = 27
@@ -61,6 +64,7 @@ func _ready() -> void:
 	screen_main.visible = false
 	screen_menu_icons.visible = false
 	screen_stats_viewer.visible = false
+	screen_minigame.visible = false
 	screen_choose_neko.visible = true
 
 func game_start() -> void:
@@ -133,6 +137,7 @@ func main_press_icon() -> void:
 	#? Pressing the menu icon from the main screen with the B button
 	if selected_main_menu_icon == -1:
 		return
+	
 	Speaker.sfx_confirm()
 	#? Call the correct function depending on the pressed menu icon
 	match selected_main_menu_icon:
@@ -148,8 +153,7 @@ func main_press_icon() -> void:
 			#TODO: Discipline
 			pass
 		5:
-			#TODO: Minigame
-			pass
+			minigame_visibility(true)
 
 
 func connect_buttons_to_main_icons() -> void:
@@ -324,6 +328,34 @@ func stats_bars_refresh() -> void:
 	$StatsViewer/Screen2/Age/Value.text = str(stats.age)
 
 
+func minigame_visibility(visibility: bool) -> void:
+	#? Do not play the minigame if lights are off
+	if is_lights_off:
+		Speaker.sfx_game_lose()
+		return
+	#? Do not play the minigame if Neko is tired
+	if stats.energy < 0.15:
+		Speaker.sfx_game_lose()
+		return
+	#? Show/Hide the minigame screen
+	screen_minigame.visible = visibility
+	screen_main.visible = !visibility
+	#? Connect/Disconnect the minigame screen buttons from the physical buttons
+	if visibility:
+		screen_minigame.start_game()
+		disconnect_buttons_to_main_icons()
+	else:
+		set_neko_speech("")
+		neko_anim.play("idle" if stats.fun < 0.6 else "happy")
+		screen_minigame.close_game()
+		Speaker.sfx_beep()
+		nekogotchi_device.button_c_pressed.disconnect(minigame_visibility.bind(false))
+		connect_buttons_to_main_icons()
+
+func minigame_ball_hit() -> void:
+	stats.fun += 0.03
+
+
 func set_neko_speech(speech: String = ""):
 	#? Show/Hide the speech hud depending if the speech is empty or not
 	neko_speech_label.visible = speech != ""
@@ -344,13 +376,13 @@ func refresh_time() -> void:
 	main_menu_time_label.text = str(time_hour, ":", "0" if time_minute <= 9 else "", time_minute, " PM" if time_is_pm else " AM")
 
 	#? Decrease the stats
-	stats_bars_refresh()
-	stats.energy += -0.01 if !is_lights_off else (0.015 if wanna_sleep else -0.01)
+	stats.energy += -0.005 if !is_lights_off else (0.05 if wanna_sleep else -0.005)
 	stats.energy = clampf(stats.energy, 0.0, 1.0)
 	stats.hunger += -0.005 if !is_lights_off else (-0.05 if wanna_sleep else -0.0075)
 	stats.hunger = clampf(stats.hunger, 0.0, 1.0)
-	stats.fun += -0.02 if !is_lights_off else (-0.05 if wanna_sleep else -0.04)
+	stats.fun += -0.01 if !is_lights_off else (-0.005 if wanna_sleep else -0.02)
 	stats.fun = clampf(stats.fun, 0.0, 1.0)
+	stats_bars_refresh()
 	check_for_speech()
 
 	#? Check for poop

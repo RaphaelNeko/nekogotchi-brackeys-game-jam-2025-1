@@ -1,4 +1,4 @@
-[gd_scene load_steps=83 format=3 uid="uid://cdpfkmxtdhgl1"]
+[gd_scene load_steps=92 format=3 uid="uid://cdpfkmxtdhgl1"]
 
 [ext_resource type="Script" path="res://scripts/tamagame.gd" id="1_fs36l"]
 [ext_resource type="Texture2D" uid="uid://biptaodx1r226" path="res://sprites/menu_icons/icon_bath.png" id="2_d5u53"]
@@ -55,6 +55,11 @@
 [ext_resource type="Texture2D" uid="uid://cv71la7anv3vf" path="res://sprites/cleaning/poop_5.png" id="51_qdlh1"]
 [ext_resource type="Texture2D" uid="uid://bxbxu11453eev" path="res://sprites/cleaning/poop_6.png" id="52_o07sr"]
 [ext_resource type="Texture2D" uid="uid://bgwnayuqhmhj6" path="res://sprites/cleaning/cleaning.png" id="53_5hepe"]
+[ext_resource type="Script" path="res://scripts/minigame.gd" id="56_eqk4e"]
+[ext_resource type="Texture2D" uid="uid://bolryynqkoox7" path="res://sprites/minigame/ball_1.png" id="56_yk1bt"]
+[ext_resource type="Script" path="res://scripts/minigame_ball.gd" id="57_7wg40"]
+[ext_resource type="Texture2D" uid="uid://boh4aniy0nacs" path="res://sprites/minigame/ball_2.png" id="57_jvoiw"]
+[ext_resource type="Texture2D" uid="uid://cvsv152rdq0cy" path="res://sprites/minigame/ball_3.png" id="58_yjjhb"]
 
 [sub_resource type="Resource" id="Resource_j01xh"]
 script = ExtResource("2_erxip")
@@ -105,6 +110,21 @@ _data = {
 "sleeping_zzz": SubResource("Animation_adesl")
 }
 
+[sub_resource type="Animation" id="Animation_lfleg"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("47_vcido")]
+}
+
 [sub_resource type="Animation" id="Animation_410ho"]
 resource_name = "loop"
 length = 1.2
@@ -120,21 +140,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [ExtResource("47_vcido"), ExtResource("48_jmq5s"), ExtResource("49_d1xkm"), ExtResource("50_kxkqq"), ExtResource("51_qdlh1"), ExtResource("52_o07sr")]
-}
-
-[sub_resource type="Animation" id="Animation_lfleg"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [ExtResource("47_vcido")]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_akg8m"]
@@ -196,6 +201,35 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_ebhpx"]
+resource_name = "happy"
+length = 8.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("45_i0jhg"), ExtResource("46_i4jy3"), ExtResource("45_i0jhg"), ExtResource("46_i4jy3"), ExtResource("45_i0jhg"), ExtResource("46_i4jy3"), ExtResource("45_i0jhg"), ExtResource("46_i4jy3"), ExtResource("45_i0jhg"), ExtResource("46_i4jy3"), ExtResource("45_i0jhg"), ExtResource("46_i4jy3"), ExtResource("45_i0jhg"), ExtResource("46_i4jy3"), ExtResource("45_i0jhg"), ExtResource("46_i4jy3")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:flip_h")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2.2, 5.7),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
 }
 
 [sub_resource type="Animation" id="Animation_dnjny"]
@@ -339,35 +373,6 @@ tracks/1/keys = {
 "values": [false, true]
 }
 
-[sub_resource type="Animation" id="Animation_ebhpx"]
-resource_name = "happy"
-length = 8.0
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [ExtResource("45_i0jhg"), ExtResource("46_i4jy3"), ExtResource("45_i0jhg"), ExtResource("46_i4jy3"), ExtResource("45_i0jhg"), ExtResource("46_i4jy3"), ExtResource("45_i0jhg"), ExtResource("46_i4jy3"), ExtResource("45_i0jhg"), ExtResource("46_i4jy3"), ExtResource("45_i0jhg"), ExtResource("46_i4jy3"), ExtResource("45_i0jhg"), ExtResource("46_i4jy3"), ExtResource("45_i0jhg"), ExtResource("46_i4jy3")]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:flip_h")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 2.2, 5.7),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [false, true, false]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_v7a03"]
 _data = {
 "RESET": SubResource("Animation_vi3xu"),
@@ -438,6 +443,33 @@ _data = {
 font_size = 50
 font_color = Color(0, 0, 0, 1)
 
+[sub_resource type="Animation" id="Animation_mp7r7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:flip_v")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(472, 108)]
+}
+
 [sub_resource type="Animation" id="Animation_jfhdh"]
 resource_name = "cleaning"
 length = 3.0
@@ -466,33 +498,6 @@ tracks/1/keys = {
 "values": [Vector2(472, 108), Vector2(424, 108), Vector2(376, 108), Vector2(328, 108), Vector2(280, 108), Vector2(232, 108), Vector2(184, 108), Vector2(136, 108), Vector2(88, 108), Vector2(40, 108), Vector2(-8, 108), Vector2(-56, 108), Vector2(-104, 108), Vector2(-152, 108), Vector2(-200, 108)]
 }
 
-[sub_resource type="Animation" id="Animation_mp7r7"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:flip_v")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(472, 108)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ma45y"]
 _data = {
 "RESET": SubResource("Animation_mp7r7"),
@@ -503,9 +508,137 @@ _data = {
 font_size = 100
 font_color = Color(0, 0, 0, 1)
 
+[sub_resource type="Animation" id="Animation_7wicb"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("56_yk1bt")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:flip_h")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_xvhyy"]
+resource_name = "hit"
+length = 0.2667
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0666667, 0.133333, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("56_yk1bt"), ExtResource("57_jvoiw"), ExtResource("58_yjjhb"), ExtResource("57_jvoiw")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:flip_h")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.376471)]
+}
+
+[sub_resource type="Animation" id="Animation_2gi6o"]
+resource_name = "roll"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("56_yk1bt"), ExtResource("57_jvoiw"), ExtResource("58_yjjhb"), ExtResource("57_jvoiw")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:flip_h")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vxify"]
+_data = {
+"RESET": SubResource("Animation_7wicb"),
+"hit": SubResource("Animation_xvhyy"),
+"roll": SubResource("Animation_2gi6o")
+}
+
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_108bk"]
 
-[node name="Game2D" type="Control" node_paths=PackedStringArray("neko_anim", "screen_choose_neko", "screen_main", "screen_menu_icons", "main_menu_icons", "main_menu_time_label", "neko_speech_label", "screen_food", "food_arrow", "food_anim", "sleep_background", "no_sleep_overlay", "screen_stats_viewer")]
+[node name="Game2D" type="Control" node_paths=PackedStringArray("neko_anim", "screen_choose_neko", "screen_main", "screen_menu_icons", "main_menu_icons", "main_menu_time_label", "neko_speech_label", "screen_food", "food_arrow", "food_anim", "sleep_background", "no_sleep_overlay", "screen_stats_viewer", "screen_minigame")]
 custom_minimum_size = Vector2(512, 512)
 layout_mode = 3
 anchors_preset = 8
@@ -535,6 +668,7 @@ sleep_background = NodePath("Main/SleepBackground")
 no_sleep_overlay = NodePath("Main/SleepBackground/NoSleep")
 screen_stats_viewer = NodePath("StatsViewer")
 stats_bar_sprites = Array[CompressedTexture2D]([ExtResource("17_owoiu"), ExtResource("4_2liuc"), ExtResource("5_lhu0r"), ExtResource("6_0al2h"), ExtResource("7_bn0lj"), ExtResource("8_37p1p"), ExtResource("9_cor63"), ExtResource("10_bu1tu"), ExtResource("11_jccox"), ExtResource("12_gck4q"), ExtResource("13_t0dfa"), ExtResource("14_le8vu"), ExtResource("15_g5m4e"), ExtResource("16_p63mw"), ExtResource("17_igt3d"), ExtResource("18_q1ey3"), ExtResource("19_exkmc")])
+screen_minigame = NodePath("Minigame")
 
 [node name="MenuIconsContainer" type="Control" parent="."]
 layout_mode = 1
@@ -647,6 +781,7 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="Main" type="Control" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1162,6 +1297,108 @@ grow_horizontal = 0
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
+[node name="Minigame" type="Control" parent="." node_paths=PackedStringArray("balls_template", "instruction_label", "neko")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("56_eqk4e")
+balls_template = [NodePath("Ball1"), NodePath("Ball2"), NodePath("Ball3")]
+instruction_label = NodePath("InstructionLabel")
+neko = NodePath("Neko")
+
+[node name="InstructionLabel" type="Label" parent="Minigame"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Hit all the balls!"
+label_settings = SubResource("LabelSettings_scrdp")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Neko" type="TextureRect" parent="Minigame"]
+texture_filter = 1
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 48.0
+offset_top = -86.0
+offset_right = 176.0
+offset_bottom = 42.0
+grow_vertical = 2
+texture = ExtResource("37_owaoj")
+
+[node name="Ball1" type="TextureRect" parent="Minigame"]
+texture_filter = 1
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 528.0
+offset_top = -110.0
+offset_right = 592.0
+offset_bottom = -46.0
+grow_vertical = 2
+texture = ExtResource("56_yk1bt")
+script = ExtResource("57_7wg40")
+
+[node name="BallAnim" type="AnimationPlayer" parent="Minigame/Ball1"]
+libraries = {
+"": SubResource("AnimationLibrary_vxify")
+}
+autoplay = "roll"
+
+[node name="Ball2" type="TextureRect" parent="Minigame"]
+texture_filter = 1
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 528.0
+offset_top = -22.0
+offset_right = 592.0
+offset_bottom = 42.0
+grow_vertical = 2
+texture = ExtResource("56_yk1bt")
+script = ExtResource("57_7wg40")
+
+[node name="BallAnim" type="AnimationPlayer" parent="Minigame/Ball2"]
+libraries = {
+"": SubResource("AnimationLibrary_vxify")
+}
+autoplay = "roll"
+
+[node name="Ball3" type="TextureRect" parent="Minigame"]
+texture_filter = 1
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 528.0
+offset_top = 66.0
+offset_right = 592.0
+offset_bottom = 130.0
+grow_vertical = 2
+texture = ExtResource("56_yk1bt")
+script = ExtResource("57_7wg40")
+
+[node name="BallAnim" type="AnimationPlayer" parent="Minigame/Ball3"]
+libraries = {
+"": SubResource("AnimationLibrary_vxify")
+}
+autoplay = "roll"
+
 [node name="ChooseYourNeko" type="Control" parent="."]
 visible = false
 layout_mode = 1
@@ -1180,7 +1417,7 @@ offset_bottom = 105.0
 grow_horizontal = 2
 color = Color(0, 0, 0, 0.313726)
 
-[node name="Time" type="Label" parent="ChooseYourNeko/TopBar"]
+[node name="Label" type="Label" parent="ChooseYourNeko/TopBar"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -1328,3 +1565,5 @@ expand_mode = 1
 stretch_mode = 5
 
 [connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
+[connection signal="on_ball_hit" from="Minigame" to="." method="minigame_ball_hit"]
+[connection signal="on_game_end" from="Minigame" to="." method="minigame_visibility" binds= [false]]

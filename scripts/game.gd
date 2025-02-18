@@ -17,10 +17,10 @@ func _ready() -> void:
 
 	#? Connect the function that runs when the battery holder has been removed
 	nekogotchi.battery_holder_removed.connect(play_intro)
-	# await get_tree().create_timer(20).timeout
-	# tween = get_tree().create_tween()
-	# tween.tween_property($HUD/Test, "position:y", -100.0, 10)
-	# tween.tween_property($HUD/Test, "position:y", 2200.0, 15).set_delay(10)
+	await get_tree().create_timer(20).timeout
+	tween = get_tree().create_tween()
+	tween.tween_property($HUD/Test, "position:y", -100.0, 10)
+	tween.tween_property($HUD/Test, "position:y", 2200.0, 15).set_delay(10)
 
 	
 func play_intro() -> void:
