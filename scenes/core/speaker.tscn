@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://ra8arckkena2"]
+[gd_scene load_steps=10 format=3 uid="uid://ra8arckkena2"]
 
 [ext_resource type="Script" path="res://scripts/speaker.gd" id="1_t6l4j"]
 [ext_resource type="AudioStream" uid="uid://dyyyriidfvf1d" path="res://audios/sfx/alert.wav" id="2_cxnq0"]
@@ -8,10 +8,11 @@
 [ext_resource type="AudioStream" uid="uid://dsrpqilnn3u3c" path="res://audios/sfx/game_start.wav" id="6_3awxl"]
 [ext_resource type="AudioStream" uid="uid://b65ife1c4u1of" path="res://audios/sfx/game_win.wav" id="7_tep8y"]
 [ext_resource type="AudioStream" uid="uid://caegpdmofmlti" path="res://audios/sfx/game_lose.wav" id="8_sfphn"]
+[ext_resource type="AudioStream" uid="uid://bx1epxsd5ivjg" path="res://audios/sfx/eating.wav" id="9_pw5pd"]
 
 [node name="Speaker" type="Node" node_paths=PackedStringArray("player")]
 script = ExtResource("1_t6l4j")
-sfx = Array[AudioStream]([ExtResource("2_il8h1"), ExtResource("2_cxnq0"), ExtResource("3_ioqfx"), ExtResource("4_7wgyh"), ExtResource("6_3awxl"), ExtResource("7_tep8y"), ExtResource("8_sfphn")])
+sfx = Array[AudioStream]([ExtResource("2_il8h1"), ExtResource("2_cxnq0"), ExtResource("3_ioqfx"), ExtResource("4_7wgyh"), ExtResource("6_3awxl"), ExtResource("7_tep8y"), ExtResource("8_sfphn"), ExtResource("9_pw5pd")])
 player = NodePath("AudioStreamPlayer")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]

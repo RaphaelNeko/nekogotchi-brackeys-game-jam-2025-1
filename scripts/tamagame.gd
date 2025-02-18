@@ -21,6 +21,15 @@ var selected_main_menu_icon: int = -1
 
 @export var main_menu_time_label: Label
 @export var neko_speech_label: Label
+var can_speech: bool = true
+
+
+@export_category("FOOD SCREEN")
+@export var screen_food: Control
+@export var food_arrow: Control
+@export var food_anim: AnimationPlayer
+var selected_food: int = 0
+var food_timer: Timer
 
 
 @export_category("Sleep References")
@@ -126,10 +135,21 @@ func main_press_icon() -> void:
 	Speaker.sfx_confirm()
 	#? Call the correct function depending on the pressed menu icon
 	match selected_main_menu_icon:
+		0:
+			food_visibility(true)
 		1:
 			toggle_lights()
+		2:
+			#TODO: Bath
+			pass
 		3:
 			stats_viewer_visibility(true)
+		4:
+			#TODO: Discipline
+			pass
+		5:
+			#TODO: Minigame
+			pass
 
 
 func connect_buttons_to_main_icons() -> void:
@@ -143,6 +163,79 @@ func disconnect_buttons_to_main_icons() -> void:
 	nekogotchi_device.button_a_pressed.disconnect(main_select_next_icon)
 	nekogotchi_device.button_b_pressed.disconnect(main_press_icon)
 	nekogotchi_device.button_c_pressed.disconnect(main_unselect_icon)
+
+
+func food_visibility(visibility: bool) -> void:
+	#? Show/Hide the food screen
+	screen_food.visible = visibility
+	screen_main.visible = !visibility
+	#? Connect/Disconnect the food screen buttons from the physical buttons
+	if visibility:
+		disconnect_buttons_to_main_icons()
+		Speaker.sfx_confirm()
+		nekogotchi_device.button_a_pressed.connect(food_select)
+		nekogotchi_device.button_b_pressed.connect(food_eat)
+		nekogotchi_device.button_c_pressed.connect(food_visibility.bind(false))
+	else:
+		Speaker.sfx_beep()
+		nekogotchi_device.button_a_pressed.disconnect(food_select)
+		nekogotchi_device.button_b_pressed.disconnect(food_eat)
+		nekogotchi_device.button_c_pressed.disconnect(food_visibility.bind(false))
+		connect_buttons_to_main_icons()
+
+func food_select() -> void:
+	selected_food += 1
+	if selected_food > 1:
+		selected_food = 0
+	food_arrow.global_position.y = $Food/FoodContainer.get_child(selected_food).global_position.y
+	Speaker.sfx_beep()
+
+func food_eat() -> void:
+	can_speech = false
+	screen_food.visible = false
+	screen_main.visible = true
+	nekogotchi_device.button_b_pressed.connect(food_eat_stop)
+	nekogotchi_device.button_a_pressed.disconnect(food_select)
+	nekogotchi_device.button_b_pressed.disconnect(food_eat)
+	nekogotchi_device.button_c_pressed.disconnect(food_visibility.bind(false))
+	food_timer = Timer.new()
+	add_child(food_timer)
+	if stats.hunger > 0.9:
+		set_neko_speech("Not hungry!")
+		Speaker.sfx_game_lose()
+		neko_anim.play("no")
+		food_timer.wait_time = 3.0
+		
+	else:
+		set_neko_speech("")
+		Speaker.sfx_eating()
+		neko_anim.play("eat")
+		if selected_food == 0:
+			stats.hunger += 0.1
+			food_anim.play("meal")
+		else:
+			stats.hunger += 0.05
+			stats.fun += 0.03
+			food_anim.play("snack")
+		food_timer.wait_time = 5.0
+	food_timer.start()
+	food_timer.timeout.connect(food_eat_stop)
+
+func food_eat_stop()-> void:
+	if food_timer:
+		food_timer.timeout.disconnect(food_eat_stop)
+		food_timer.queue_free()
+	Speaker.sfx_beep()
+	food_anim.play("RESET")
+	set_neko_speech("")
+	neko_anim.play("idle")
+	nekogotchi_device.button_b_pressed.disconnect(food_eat_stop)
+	nekogotchi_device.button_a_pressed.connect(food_select)
+	nekogotchi_device.button_b_pressed.connect(food_eat)
+	nekogotchi_device.button_c_pressed.connect(food_visibility.bind(false))
+	screen_food.visible = true
+	screen_main.visible = false
+	can_speech = true
 
 
 func toggle_lights() -> void:
@@ -214,7 +307,7 @@ func refresh_time() -> void:
 	stats_bars_refresh()
 	stats.energy += -0.01 if !is_lights_off else (0.015 if wanna_sleep else -0.01)
 	stats.energy = clampf(stats.energy, 0.0, 1.0)
-	stats.hunger += -0.025 if !is_lights_off else (-0.05 if wanna_sleep else -0.03)
+	stats.hunger += -0.005 if !is_lights_off else (-0.05 if wanna_sleep else -0.0075)
 	stats.hunger = clampf(stats.hunger, 0.0, 1.0)
 	stats.fun += -0.02 if !is_lights_off else (-0.05 if wanna_sleep else -0.04)
 	stats.fun = clampf(stats.fun, 0.0, 1.0)
@@ -225,7 +318,9 @@ func refresh_time() -> void:
 	refresh_time()
 
 func check_for_speech():
-	#? Do not speech if the main screen isn't visible or the lights are turned off
+	#? Do not speech if the main screen isn't visible, or the lights are turned off, or the can_speech variable is false
+	if !can_speech:
+		return
 	if !screen_main.visible:
 		return
 	if is_lights_off:
@@ -236,11 +331,13 @@ func check_for_speech():
 		if neko_speech_label.text != "I am sleepy!!":
 			set_neko_speech("I am sleepy!!")
 			Speaker.sfx_alert()
+			neko_anim.play("worry")
 			return
 	if !time_is_pm and time_hour <= 7:
 		if neko_speech_label.text != "I am sleepy!!":
 			set_neko_speech("I am sleepy!!")
 			Speaker.sfx_alert()
+			neko_anim.play("worry")
 			return
 	
 	#? Checks for stats to display the correct speech
@@ -250,13 +347,16 @@ func check_for_speech():
 				if neko_speech_label.text != "I am sleepy!!":
 					set_neko_speech("Let's play!!")
 					Speaker.sfx_alert()
+					neko_anim.play("worry")
 		if stats.hunger < 0.15 and neko_speech_label.text != "I am hungry!!":
 			if neko_speech_label.text != "I am sleepy!!":
 				set_neko_speech("I am hungry!!")
 				Speaker.sfx_alert()
+				neko_anim.play("worry")
 		if stats.energy < 0.15 and neko_speech_label.text != "I am sleepy!!":
 			set_neko_speech("I am sleepy!!")
 			Speaker.sfx_alert()
+			neko_anim.play("worry")
 
 func _process(_delta: float) -> void:
 	#? Debug keys for testing

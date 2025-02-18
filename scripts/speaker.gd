@@ -25,6 +25,9 @@ func sfx_game_win() -> void:
 func sfx_game_lose() -> void:
 	play_sfx(6)
 
+func sfx_eating() -> void:
+	play_sfx(7)
+
 func play_sfx(sfxID: int):
 	if player.stream == sfx[0] and player.playing:
 		return

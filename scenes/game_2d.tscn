@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=3 uid="uid://cdpfkmxtdhgl1"]
+[gd_scene load_steps=67 format=3 uid="uid://cdpfkmxtdhgl1"]
 
 [ext_resource type="Script" path="res://scripts/tamagame.gd" id="1_fs36l"]
 [ext_resource type="Texture2D" uid="uid://biptaodx1r226" path="res://sprites/menu_icons/icon_bath.png" id="2_d5u53"]
@@ -33,12 +33,25 @@
 [ext_resource type="Texture2D" uid="uid://b44r7o6eomwf5" path="res://sprites/stats_bar/stats_bar_1.png" id="17_owoiu"]
 [ext_resource type="Texture2D" uid="uid://y0o8tb6ph2i8" path="res://sprites/stats_bar/stats_bar_16.png" id="18_q1ey3"]
 [ext_resource type="Texture2D" uid="uid://e1wv4hc6f558" path="res://sprites/stats_bar/stats_bar_17.png" id="19_exkmc"]
+[ext_resource type="Texture2D" uid="uid://bt68jisghdr7f" path="res://sprites/neko/nekogotchi9.png" id="34_0hhp6"]
+[ext_resource type="Texture2D" uid="uid://dbq06ermteyep" path="res://sprites/neko/nekogotchi10.png" id="35_1k0fp"]
+[ext_resource type="Texture2D" uid="uid://diifc1woop65e" path="res://sprites/neko/nekogotchi8.png" id="36_elp0l"]
+[ext_resource type="Texture2D" uid="uid://ctorct8gvgd6p" path="res://sprites/neko/nekogotchi11.png" id="37_owaoj"]
+[ext_resource type="Texture2D" uid="uid://c3ynogbw1vb5n" path="res://sprites/neko/nekogotchi12.png" id="38_06b8n"]
+[ext_resource type="Texture2D" uid="uid://cgo34i7fw0fps" path="res://sprites/food/food_meal_1.png" id="39_jnmij"]
+[ext_resource type="Texture2D" uid="uid://bq00ufid01x6h" path="res://sprites/food/food_meal_2.png" id="40_vur2b"]
+[ext_resource type="Texture2D" uid="uid://b8q8y5loa6qpu" path="res://sprites/food/food_meal_3.png" id="41_y33ru"]
+[ext_resource type="Texture2D" uid="uid://b1eeobg5eniro" path="res://sprites/food/food_meal_4.png" id="42_je17a"]
+[ext_resource type="Texture2D" uid="uid://dur4e0t80q3w6" path="res://sprites/food/food_snack_1.png" id="43_6dput"]
+[ext_resource type="Texture2D" uid="uid://b07kavw7ytciw" path="res://sprites/food/food_snack_2.png" id="44_k3bnr"]
+[ext_resource type="Texture2D" uid="uid://dqmwftwlvt8oe" path="res://sprites/food/food_snack_3.png" id="45_ehfhw"]
+[ext_resource type="Texture2D" uid="uid://cauk6i0601vg" path="res://sprites/food/food_snack_4.png" id="46_gww17"]
 
 [sub_resource type="Resource" id="Resource_j01xh"]
 script = ExtResource("2_erxip")
 energy = 1.0
-hunger = 0.486
-fun = 0.272
+hunger = 0.5
+fun = 0.2
 age = 0
 
 [sub_resource type="LabelSettings" id="LabelSettings_scrdp"]
@@ -110,6 +123,34 @@ tracks/1/keys = {
 "values": [false]
 }
 
+[sub_resource type="Animation" id="Animation_ei3ym"]
+resource_name = "eat"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("37_owaoj"), ExtResource("38_06b8n"), ExtResource("37_owaoj"), ExtResource("38_06b8n"), ExtResource("37_owaoj"), ExtResource("38_06b8n"), ExtResource("37_owaoj"), ExtResource("38_06b8n"), ExtResource("37_owaoj")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:flip_h")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
 [sub_resource type="Animation" id="Animation_dnjny"]
 resource_name = "idle"
 length = 8.0
@@ -137,6 +178,34 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
 "values": [false, true, false]
+}
+
+[sub_resource type="Animation" id="Animation_hdmd1"]
+resource_name = "no"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("36_elp0l")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:flip_h")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
 }
 
 [sub_resource type="Animation" id="Animation_nkbcx"]
@@ -194,21 +263,111 @@ tracks/1/keys = {
 "values": [false, true]
 }
 
+[sub_resource type="Animation" id="Animation_cuuc7"]
+resource_name = "worry"
+length = 6.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.5, 3, 4.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("34_0hhp6"), ExtResource("35_1k0fp"), ExtResource("34_0hhp6"), ExtResource("35_1k0fp")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:flip_h")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.366667, 3.36667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_v7a03"]
 _data = {
 "RESET": SubResource("Animation_vi3xu"),
+"eat": SubResource("Animation_ei3ym"),
 "idle": SubResource("Animation_dnjny"),
+"no": SubResource("Animation_hdmd1"),
 "sleep": SubResource("Animation_nkbcx"),
-"sleep_not_tired": SubResource("Animation_3vsrf")
+"sleep_not_tired": SubResource("Animation_3vsrf"),
+"worry": SubResource("Animation_cuuc7")
+}
+
+[sub_resource type="Animation" id="Animation_xshl0"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [null]
+}
+
+[sub_resource type="Animation" id="Animation_7uarm"]
+resource_name = "meal"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("39_jnmij"), ExtResource("40_vur2b"), ExtResource("41_y33ru"), ExtResource("42_je17a"), null]
+}
+
+[sub_resource type="Animation" id="Animation_c28rm"]
+resource_name = "snack"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("43_6dput"), ExtResource("44_k3bnr"), ExtResource("45_ehfhw"), ExtResource("46_gww17"), null]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_iy176"]
+_data = {
+"RESET": SubResource("Animation_xshl0"),
+"meal": SubResource("Animation_7uarm"),
+"snack": SubResource("Animation_c28rm")
 }
 
 [sub_resource type="LabelSettings" id="LabelSettings_dr7p6"]
 font_size = 50
 font_color = Color(0, 0, 0, 1)
 
+[sub_resource type="LabelSettings" id="LabelSettings_w5hmm"]
+font_size = 100
+font_color = Color(0, 0, 0, 1)
+
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_108bk"]
 
-[node name="Game2D" type="Control" node_paths=PackedStringArray("neko_anim", "screen_choose_neko", "screen_main", "screen_menu_icons", "main_menu_icons", "main_menu_time_label", "neko_speech_label", "sleep_background", "no_sleep_overlay", "screen_stats_viewer")]
+[node name="Game2D" type="Control" node_paths=PackedStringArray("neko_anim", "screen_choose_neko", "screen_main", "screen_menu_icons", "main_menu_icons", "main_menu_time_label", "neko_speech_label", "screen_food", "food_arrow", "food_anim", "sleep_background", "no_sleep_overlay", "screen_stats_viewer")]
 custom_minimum_size = Vector2(512, 512)
 layout_mode = 3
 anchors_preset = 8
@@ -231,6 +390,9 @@ screen_menu_icons = NodePath("MenuIconsContainer")
 main_menu_icons = [NodePath("MenuIconsContainer/TopIcons/Food"), NodePath("MenuIconsContainer/TopIcons/Light"), NodePath("MenuIconsContainer/BottomIcons/Bath"), NodePath("MenuIconsContainer/BottomIcons/Scale"), NodePath("MenuIconsContainer/BottomIcons/Discipline"), NodePath("MenuIconsContainer/BottomIcons/Game")]
 main_menu_time_label = NodePath("MenuIconsContainer/TopIcons/Time")
 neko_speech_label = NodePath("Main/NekoSpeech")
+screen_food = NodePath("Food")
+food_arrow = NodePath("Food/Arrow")
+food_anim = NodePath("Main/Food/FoodAnim")
 sleep_background = NodePath("Main/SleepBackground")
 no_sleep_overlay = NodePath("Main/SleepBackground/NoSleep")
 screen_stats_viewer = NodePath("StatsViewer")
@@ -347,7 +509,6 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="Main" type="Control" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -478,6 +639,28 @@ libraries = {
 }
 autoplay = "idle"
 playback_auto_capture = false
+
+[node name="Food" type="TextureRect" parent="Main"]
+texture_filter = 1
+custom_minimum_size = Vector2(96, 96)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 96.0
+offset_top = 50.0
+offset_right = 192.0
+offset_bottom = 146.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+
+[node name="FoodAnim" type="AnimationPlayer" parent="Main/Food"]
+libraries = {
+"": SubResource("AnimationLibrary_iy176")
+}
 
 [node name="NekoSpeech" type="Label" parent="Main"]
 visible = false
@@ -657,6 +840,123 @@ text = "0"
 label_settings = SubResource("LabelSettings_dr7p6")
 horizontal_alignment = 2
 vertical_alignment = 1
+
+[node name="Food" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="FoodContainer" type="VBoxContainer" parent="Food"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 121.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="Meal" type="Label" parent="Food/FoodContainer"]
+layout_mode = 2
+text = "Meal"
+label_settings = SubResource("LabelSettings_w5hmm")
+vertical_alignment = 1
+uppercase = true
+
+[node name="Snack" type="Label" parent="Food/FoodContainer"]
+layout_mode = 2
+text = "Snack"
+label_settings = SubResource("LabelSettings_w5hmm")
+vertical_alignment = 1
+uppercase = true
+
+[node name="Arrow" type="Control" parent="Food"]
+layout_mode = 1
+anchors_preset = 0
+offset_left = 41.0
+offset_top = 138.0
+offset_right = 81.0
+offset_bottom = 178.0
+
+[node name="Black" type="ColorRect" parent="Food/Arrow"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -15.0
+offset_top = 29.5
+offset_right = -2.0
+offset_bottom = 42.5
+grow_horizontal = 0
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Black2" type="ColorRect" parent="Food/Arrow"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -28.0
+offset_top = 16.5
+offset_right = -15.0
+offset_bottom = 29.5
+grow_horizontal = 0
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Black3" type="ColorRect" parent="Food/Arrow"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -28.0
+offset_top = 42.5
+offset_right = -15.0
+offset_bottom = 55.5
+grow_horizontal = 0
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Black4" type="ColorRect" parent="Food/Arrow"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -41.0
+offset_top = 55.5
+offset_right = -28.0
+offset_bottom = 68.5
+grow_horizontal = 0
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Black5" type="ColorRect" parent="Food/Arrow"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -41.0
+offset_top = 3.5
+offset_right = -28.0
+offset_bottom = 16.5
+grow_horizontal = 0
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
 
 [node name="ChooseYourNeko" type="Control" parent="."]
 visible = false
