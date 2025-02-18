@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://cdpfkmxtdhgl1"]
+[gd_scene load_steps=46 format=3 uid="uid://cdpfkmxtdhgl1"]
 
 [ext_resource type="Script" path="res://scripts/tamagame.gd" id="1_fs36l"]
 [ext_resource type="Texture2D" uid="uid://biptaodx1r226" path="res://sprites/menu_icons/icon_bath.png" id="2_d5u53"]
@@ -8,20 +8,37 @@
 [ext_resource type="Texture2D" uid="uid://cmlsksudmxt88" path="res://sprites/sleep_frames/sleep_frame_2.png" id="3_a4dp5"]
 [ext_resource type="Texture2D" uid="uid://44om4nfyn7u1" path="res://sprites/neko/nekogotchi7.png" id="3_c4xy7"]
 [ext_resource type="Texture2D" uid="uid://br8u0r8n1pmpg" path="res://sprites/menu_icons/icon_scale.png" id="3_wsvc8"]
+[ext_resource type="Texture2D" uid="uid://dyhoren1j1mjy" path="res://sprites/stats_bar/stats_bar_2.png" id="4_2liuc"]
 [ext_resource type="Texture2D" uid="uid://dtb85wks0rgea" path="res://sprites/sleep_frames/sleep_frame_3.png" id="4_cq866"]
 [ext_resource type="Texture2D" uid="uid://q7su6a0tobna" path="res://sprites/menu_icons/icon_discipline.png" id="4_ulokx"]
 [ext_resource type="Texture2D" uid="uid://dr8xaqylra3le" path="res://sprites/menu_icons/icon_game.png" id="5_5p1ff"]
+[ext_resource type="Texture2D" uid="uid://td2xdqv8ni0u" path="res://sprites/stats_bar/stats_bar_3.png" id="5_lhu0r"]
+[ext_resource type="Texture2D" uid="uid://bkrkqu0go8e2r" path="res://sprites/stats_bar/stats_bar_4.png" id="6_0al2h"]
 [ext_resource type="Texture2D" uid="uid://4k6nagyxkd07" path="res://sprites/menu_icons/icon_eat.png" id="6_0eegk"]
 [ext_resource type="Texture2D" uid="uid://bw25p4kt240xd" path="res://sprites/menu_icons/icon_lamp.png" id="7_63ku7"]
+[ext_resource type="Texture2D" uid="uid://bef0sha5ii3yj" path="res://sprites/stats_bar/stats_bar_5.png" id="7_bn0lj"]
 [ext_resource type="Texture2D" uid="uid://dmshtmbogy7jr" path="res://sprites/neko/nekogotchi2.png" id="7_rblyx"]
+[ext_resource type="Texture2D" uid="uid://ba4xhg33rf8hm" path="res://sprites/stats_bar/stats_bar_6.png" id="8_37p1p"]
 [ext_resource type="Texture2D" uid="uid://b46qtl5dfmysl" path="res://sprites/neko/nekogotchi3.png" id="8_inltq"]
+[ext_resource type="Texture2D" uid="uid://v68jb711t75" path="res://sprites/stats_bar/stats_bar_7.png" id="9_cor63"]
+[ext_resource type="Texture2D" uid="uid://b3ijh3mr1v5co" path="res://sprites/stats_bar/stats_bar_8.png" id="10_bu1tu"]
 [ext_resource type="Texture2D" uid="uid://c413nbsf0j4wv" path="res://sprites/neko/nekogotchi6.png" id="10_x73i5"]
+[ext_resource type="Texture2D" uid="uid://cf70ch8ufb508" path="res://sprites/stats_bar/stats_bar_9.png" id="11_jccox"]
+[ext_resource type="Texture2D" uid="uid://bnkhwfqj2wwye" path="res://sprites/stats_bar/stats_bar_10.png" id="12_gck4q"]
+[ext_resource type="Texture2D" uid="uid://b6vnwu7cmie01" path="res://sprites/stats_bar/stats_bar_11.png" id="13_t0dfa"]
+[ext_resource type="Texture2D" uid="uid://c8sjgs6ewswot" path="res://sprites/stats_bar/stats_bar_12.png" id="14_le8vu"]
+[ext_resource type="Texture2D" uid="uid://dk1sybgpukwsn" path="res://sprites/stats_bar/stats_bar_13.png" id="15_g5m4e"]
+[ext_resource type="Texture2D" uid="uid://bvyibtwodoit5" path="res://sprites/stats_bar/stats_bar_14.png" id="16_p63mw"]
+[ext_resource type="Texture2D" uid="uid://b5b2u24b6ca5q" path="res://sprites/stats_bar/stats_bar_15.png" id="17_igt3d"]
+[ext_resource type="Texture2D" uid="uid://b44r7o6eomwf5" path="res://sprites/stats_bar/stats_bar_1.png" id="17_owoiu"]
+[ext_resource type="Texture2D" uid="uid://y0o8tb6ph2i8" path="res://sprites/stats_bar/stats_bar_16.png" id="18_q1ey3"]
+[ext_resource type="Texture2D" uid="uid://e1wv4hc6f558" path="res://sprites/stats_bar/stats_bar_17.png" id="19_exkmc"]
 
 [sub_resource type="Resource" id="Resource_j01xh"]
 script = ExtResource("2_erxip")
 energy = 1.0
-hunger = 1.0
-fun = 1.0
+hunger = 0.486
+fun = 0.272
 age = 0
 
 [sub_resource type="LabelSettings" id="LabelSettings_scrdp"]
@@ -217,6 +234,7 @@ neko_speech_label = NodePath("Main/NekoSpeech")
 sleep_background = NodePath("Main/SleepBackground")
 no_sleep_overlay = NodePath("Main/SleepBackground/NoSleep")
 screen_stats_viewer = NodePath("StatsViewer")
+stats_bar_sprites = Array[CompressedTexture2D]([ExtResource("17_owoiu"), ExtResource("4_2liuc"), ExtResource("5_lhu0r"), ExtResource("6_0al2h"), ExtResource("7_bn0lj"), ExtResource("8_37p1p"), ExtResource("9_cor63"), ExtResource("10_bu1tu"), ExtResource("11_jccox"), ExtResource("12_gck4q"), ExtResource("13_t0dfa"), ExtResource("14_le8vu"), ExtResource("15_g5m4e"), ExtResource("16_p63mw"), ExtResource("17_igt3d"), ExtResource("18_q1ey3"), ExtResource("19_exkmc")])
 
 [node name="MenuIconsContainer" type="Control" parent="."]
 layout_mode = 1
@@ -329,6 +347,7 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="Main" type="Control" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -551,11 +570,41 @@ text = "ENERGY"
 label_settings = SubResource("LabelSettings_dr7p6")
 vertical_alignment = 1
 
+[node name="Stat" type="TextureRect" parent="StatsViewer/Screen1/Energy"]
+texture_filter = 1
+custom_minimum_size = Vector2(232, 57)
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+grow_horizontal = 0
+grow_vertical = 2
+texture = ExtResource("17_owoiu")
+expand_mode = 1
+stretch_mode = 5
+
 [node name="Hunger" type="Label" parent="StatsViewer/Screen1"]
 layout_mode = 2
 text = "HUNGER"
 label_settings = SubResource("LabelSettings_dr7p6")
 vertical_alignment = 1
+
+[node name="Stat" type="TextureRect" parent="StatsViewer/Screen1/Hunger"]
+texture_filter = 1
+custom_minimum_size = Vector2(232, 57)
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+grow_horizontal = 0
+grow_vertical = 2
+texture = ExtResource("17_owoiu")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="Screen2" type="VBoxContainer" parent="StatsViewer"]
 visible = false
@@ -575,6 +624,21 @@ layout_mode = 2
 text = "FUN"
 label_settings = SubResource("LabelSettings_dr7p6")
 vertical_alignment = 1
+
+[node name="Stat" type="TextureRect" parent="StatsViewer/Screen2/Fun"]
+texture_filter = 1
+custom_minimum_size = Vector2(232, 57)
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+grow_horizontal = 0
+grow_vertical = 2
+texture = ExtResource("17_owoiu")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="Age" type="Label" parent="StatsViewer/Screen2"]
 layout_mode = 2

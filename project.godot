@@ -19,10 +19,6 @@ boot_splash/fullsize=false
 boot_splash/use_filter=false
 config/icon="res://sprites/logo/app_icon.png"
 
-[autoload]
-
-Speaker="*res://scenes/core/speaker.tscn"
-
 [display]
 
 window/size/viewport_width=1600
