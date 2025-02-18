@@ -1,4 +1,4 @@
-[gd_scene load_steps=67 format=3 uid="uid://cdpfkmxtdhgl1"]
+[gd_scene load_steps=76 format=3 uid="uid://cdpfkmxtdhgl1"]
 
 [ext_resource type="Script" path="res://scripts/tamagame.gd" id="1_fs36l"]
 [ext_resource type="Texture2D" uid="uid://biptaodx1r226" path="res://sprites/menu_icons/icon_bath.png" id="2_d5u53"]
@@ -46,6 +46,12 @@
 [ext_resource type="Texture2D" uid="uid://b07kavw7ytciw" path="res://sprites/food/food_snack_2.png" id="44_k3bnr"]
 [ext_resource type="Texture2D" uid="uid://dqmwftwlvt8oe" path="res://sprites/food/food_snack_3.png" id="45_ehfhw"]
 [ext_resource type="Texture2D" uid="uid://cauk6i0601vg" path="res://sprites/food/food_snack_4.png" id="46_gww17"]
+[ext_resource type="Texture2D" uid="uid://b8r6odeg464j8" path="res://sprites/cleaning/poop_1.png" id="47_vcido"]
+[ext_resource type="Texture2D" uid="uid://ctld3mx2trjkt" path="res://sprites/cleaning/poop_2.png" id="48_jmq5s"]
+[ext_resource type="Texture2D" uid="uid://b5ek008lwuv8h" path="res://sprites/cleaning/poop_3.png" id="49_d1xkm"]
+[ext_resource type="Texture2D" uid="uid://e0dwtolaom5r" path="res://sprites/cleaning/poop_4.png" id="50_kxkqq"]
+[ext_resource type="Texture2D" uid="uid://cv71la7anv3vf" path="res://sprites/cleaning/poop_5.png" id="51_qdlh1"]
+[ext_resource type="Texture2D" uid="uid://bxbxu11453eev" path="res://sprites/cleaning/poop_6.png" id="52_o07sr"]
 
 [sub_resource type="Resource" id="Resource_j01xh"]
 script = ExtResource("2_erxip")
@@ -94,6 +100,44 @@ tracks/0/keys = {
 _data = {
 "RESET": SubResource("Animation_1w7ql"),
 "sleeping_zzz": SubResource("Animation_adesl")
+}
+
+[sub_resource type="Animation" id="Animation_410ho"]
+resource_name = "loop"
+length = 1.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("47_vcido"), ExtResource("48_jmq5s"), ExtResource("49_d1xkm"), ExtResource("50_kxkqq"), ExtResource("51_qdlh1"), ExtResource("52_o07sr")]
+}
+
+[sub_resource type="Animation" id="Animation_lfleg"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("47_vcido")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_akg8m"]
+_data = {
+"RESET": SubResource("Animation_lfleg"),
+"loop": SubResource("Animation_410ho")
 }
 
 [sub_resource type="Animation" id="Animation_vi3xu"]
@@ -614,6 +658,49 @@ offset_bottom = -64.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
+
+[node name="PoopContainer" type="Control" parent="Main"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Poop1" type="TextureRect" parent="Main/PoopContainer"]
+visible = false
+texture_filter = 1
+custom_minimum_size = Vector2(64, 128)
+layout_mode = 0
+offset_left = 53.0
+offset_top = 240.0
+offset_right = 117.0
+offset_bottom = 368.0
+texture = ExtResource("47_vcido")
+
+[node name="PoopAnim" type="AnimationPlayer" parent="Main/PoopContainer/Poop1"]
+libraries = {
+"": SubResource("AnimationLibrary_akg8m")
+}
+autoplay = "loop"
+
+[node name="Poop2" type="TextureRect" parent="Main/PoopContainer"]
+visible = false
+texture_filter = 1
+custom_minimum_size = Vector2(64, 128)
+layout_mode = 0
+offset_left = 434.0
+offset_top = 257.0
+offset_right = 498.0
+offset_bottom = 385.0
+texture = ExtResource("47_vcido")
+flip_h = true
+
+[node name="PoopAnim" type="AnimationPlayer" parent="Main/PoopContainer/Poop2"]
+libraries = {
+"": SubResource("AnimationLibrary_akg8m")
+}
+autoplay = "loop"
 
 [node name="Neko" type="TextureRect" parent="Main"]
 texture_filter = 1

@@ -184,6 +184,7 @@ func food_visibility(visibility: bool) -> void:
 		connect_buttons_to_main_icons()
 
 func food_select() -> void:
+	#? Switch between the meal and snack
 	selected_food += 1
 	if selected_food > 1:
 		selected_food = 0
@@ -191,8 +192,10 @@ func food_select() -> void:
 	Speaker.sfx_beep()
 
 func food_eat() -> void:
+	#? Hide the food screen, hide the poop container, and shows Neko again, disable the buttons
 	can_speech = false
 	screen_food.visible = false
+	$Main/PoopContainer.visible = false
 	screen_main.visible = true
 	nekogotchi_device.button_b_pressed.connect(food_eat_stop)
 	nekogotchi_device.button_a_pressed.disconnect(food_select)
@@ -200,6 +203,7 @@ func food_eat() -> void:
 	nekogotchi_device.button_c_pressed.disconnect(food_visibility.bind(false))
 	food_timer = Timer.new()
 	add_child(food_timer)
+	#? Check if Neko is hungry or not, then play the animation
 	if stats.hunger > 0.9:
 		set_neko_speech("Not hungry!")
 		Speaker.sfx_game_lose()
@@ -221,7 +225,8 @@ func food_eat() -> void:
 	food_timer.start()
 	food_timer.timeout.connect(food_eat_stop)
 
-func food_eat_stop()-> void:
+func food_eat_stop() -> void:
+	#? Stop the eating/not hungry animation and shows the food screen
 	if food_timer:
 		food_timer.timeout.disconnect(food_eat_stop)
 		food_timer.queue_free()
@@ -235,6 +240,7 @@ func food_eat_stop()-> void:
 	nekogotchi_device.button_c_pressed.connect(food_visibility.bind(false))
 	screen_food.visible = true
 	screen_main.visible = false
+	$Main/PoopContainer.visible = true
 	can_speech = true
 
 
@@ -313,9 +319,23 @@ func refresh_time() -> void:
 	stats.fun = clampf(stats.fun, 0.0, 1.0)
 	check_for_speech()
 
+	#? Check for poop
+	if stats.hunger > 0.2:
+		if time_minute == 25 or time_minute == 55:
+			add_poop()
+
 	#? Repeat the function every second
 	await get_tree().create_timer(1).timeout
 	refresh_time()
+
+func add_poop():
+	if !$Main/PoopContainer/Poop1.visible:
+		Speaker.sfx_poop()
+		$Main/PoopContainer/Poop1.visible = true
+		return
+	if !$Main/PoopContainer/Poop2.visible:
+		Speaker.sfx_poop()
+		$Main/PoopContainer/Poop2.visible = true
 
 func check_for_speech():
 	#? Do not speech if the main screen isn't visible, or the lights are turned off, or the can_speech variable is false

@@ -28,6 +28,9 @@ func sfx_game_lose() -> void:
 func sfx_eating() -> void:
 	play_sfx(7)
 
+func sfx_poop() -> void:
+	play_sfx(8)
+
 func play_sfx(sfxID: int):
 	if player.stream == sfx[0] and player.playing:
 		return
