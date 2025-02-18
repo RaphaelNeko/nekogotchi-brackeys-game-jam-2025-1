@@ -1298,6 +1298,7 @@ grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
 [node name="Minigame" type="Control" parent="." node_paths=PackedStringArray("balls_template", "instruction_label", "neko")]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

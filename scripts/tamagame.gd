@@ -353,7 +353,7 @@ func minigame_visibility(visibility: bool) -> void:
 		connect_buttons_to_main_icons()
 
 func minigame_ball_hit() -> void:
-	stats.fun += 0.03
+	stats.fun += 0.1
 
 
 func set_neko_speech(speech: String = ""):
@@ -378,6 +378,8 @@ func refresh_time() -> void:
 	#? Decrease the stats
 	stats.energy += -0.005 if !is_lights_off else (0.05 if wanna_sleep else -0.005)
 	stats.energy = clampf(stats.energy, 0.0, 1.0)
+	if is_lights_off and stats.energy == 1.0:
+		toggle_lights()
 	stats.hunger += -0.005 if !is_lights_off else (-0.05 if wanna_sleep else -0.0075)
 	stats.hunger = clampf(stats.hunger, 0.0, 1.0)
 	stats.fun += -0.01 if !is_lights_off else (-0.005 if wanna_sleep else -0.02)
@@ -397,7 +399,9 @@ func refresh_time() -> void:
 func add_poop():
 	#? Do not poop if lights are off
 	if is_lights_off:
-		Speaker.sfx_game_lose()
+		return
+	#? Do not poop if minigame is playing
+	if screen_minigame.visible:
 		return
 	if !$Main/PoopContainer/Poop1.visible:
 		Speaker.sfx_poop()
