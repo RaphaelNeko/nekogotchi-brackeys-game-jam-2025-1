@@ -1,4 +1,4 @@
-[gd_scene load_steps=76 format=3 uid="uid://cdpfkmxtdhgl1"]
+[gd_scene load_steps=83 format=3 uid="uid://cdpfkmxtdhgl1"]
 
 [ext_resource type="Script" path="res://scripts/tamagame.gd" id="1_fs36l"]
 [ext_resource type="Texture2D" uid="uid://biptaodx1r226" path="res://sprites/menu_icons/icon_bath.png" id="2_d5u53"]
@@ -45,13 +45,16 @@
 [ext_resource type="Texture2D" uid="uid://dur4e0t80q3w6" path="res://sprites/food/food_snack_1.png" id="43_6dput"]
 [ext_resource type="Texture2D" uid="uid://b07kavw7ytciw" path="res://sprites/food/food_snack_2.png" id="44_k3bnr"]
 [ext_resource type="Texture2D" uid="uid://dqmwftwlvt8oe" path="res://sprites/food/food_snack_3.png" id="45_ehfhw"]
+[ext_resource type="Texture2D" uid="uid://cmalu4a4tkyfs" path="res://sprites/neko/nekogotchi4.png" id="45_i0jhg"]
 [ext_resource type="Texture2D" uid="uid://cauk6i0601vg" path="res://sprites/food/food_snack_4.png" id="46_gww17"]
+[ext_resource type="Texture2D" uid="uid://bkni0kbhvtsne" path="res://sprites/neko/nekogotchi5.png" id="46_i4jy3"]
 [ext_resource type="Texture2D" uid="uid://b8r6odeg464j8" path="res://sprites/cleaning/poop_1.png" id="47_vcido"]
 [ext_resource type="Texture2D" uid="uid://ctld3mx2trjkt" path="res://sprites/cleaning/poop_2.png" id="48_jmq5s"]
 [ext_resource type="Texture2D" uid="uid://b5ek008lwuv8h" path="res://sprites/cleaning/poop_3.png" id="49_d1xkm"]
 [ext_resource type="Texture2D" uid="uid://e0dwtolaom5r" path="res://sprites/cleaning/poop_4.png" id="50_kxkqq"]
 [ext_resource type="Texture2D" uid="uid://cv71la7anv3vf" path="res://sprites/cleaning/poop_5.png" id="51_qdlh1"]
 [ext_resource type="Texture2D" uid="uid://bxbxu11453eev" path="res://sprites/cleaning/poop_6.png" id="52_o07sr"]
+[ext_resource type="Texture2D" uid="uid://bgwnayuqhmhj6" path="res://sprites/cleaning/cleaning.png" id="53_5hepe"]
 
 [sub_resource type="Resource" id="Resource_j01xh"]
 script = ExtResource("2_erxip")
@@ -336,10 +339,40 @@ tracks/1/keys = {
 "values": [false, true]
 }
 
+[sub_resource type="Animation" id="Animation_ebhpx"]
+resource_name = "happy"
+length = 8.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("45_i0jhg"), ExtResource("46_i4jy3"), ExtResource("45_i0jhg"), ExtResource("46_i4jy3"), ExtResource("45_i0jhg"), ExtResource("46_i4jy3"), ExtResource("45_i0jhg"), ExtResource("46_i4jy3"), ExtResource("45_i0jhg"), ExtResource("46_i4jy3"), ExtResource("45_i0jhg"), ExtResource("46_i4jy3"), ExtResource("45_i0jhg"), ExtResource("46_i4jy3"), ExtResource("45_i0jhg"), ExtResource("46_i4jy3")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:flip_h")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2.2, 5.7),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_v7a03"]
 _data = {
 "RESET": SubResource("Animation_vi3xu"),
 "eat": SubResource("Animation_ei3ym"),
+"happy": SubResource("Animation_ebhpx"),
 "idle": SubResource("Animation_dnjny"),
 "no": SubResource("Animation_hdmd1"),
 "sleep": SubResource("Animation_nkbcx"),
@@ -404,6 +437,67 @@ _data = {
 [sub_resource type="LabelSettings" id="LabelSettings_dr7p6"]
 font_size = 50
 font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Animation" id="Animation_jfhdh"]
+resource_name = "cleaning"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:flip_v")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8, 2, 2.2, 2.4, 2.6, 2.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [false, true, false, true, false, true, false, true, false, true, false, true, false, true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 0
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8, 2, 2.2, 2.4, 2.6, 2.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Vector2(472, 108), Vector2(424, 108), Vector2(376, 108), Vector2(328, 108), Vector2(280, 108), Vector2(232, 108), Vector2(184, 108), Vector2(136, 108), Vector2(88, 108), Vector2(40, 108), Vector2(-8, 108), Vector2(-56, 108), Vector2(-104, 108), Vector2(-152, 108), Vector2(-200, 108)]
+}
+
+[sub_resource type="Animation" id="Animation_mp7r7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:flip_v")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(472, 108)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ma45y"]
+_data = {
+"RESET": SubResource("Animation_mp7r7"),
+"cleaning": SubResource("Animation_jfhdh")
+}
 
 [sub_resource type="LabelSettings" id="LabelSettings_w5hmm"]
 font_size = 100
@@ -812,6 +906,29 @@ offset_bottom = 34.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.313726)
+
+[node name="CleaningSprite" type="TextureRect" parent="Main"]
+texture_filter = 1
+custom_minimum_size = Vector2(192, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 216.0
+offset_top = -148.0
+offset_right = 408.0
+offset_bottom = 140.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("53_5hepe")
+stretch_mode = 6
+
+[node name="CleaningAnim" type="AnimationPlayer" parent="Main/CleaningSprite"]
+libraries = {
+"": SubResource("AnimationLibrary_ma45y")
+}
 
 [node name="StatsViewer" type="Control" parent="."]
 visible = false

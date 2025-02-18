@@ -111,6 +111,7 @@ func choose_neko_confirm() -> void:
 	Speaker.sfx_beep()
 	connect_buttons_to_main_icons()
 
+
 func main_select_next_icon() -> void:
 	#? Selecting the menu icon from the main screen with the A button
 	if selected_main_menu_icon != -1:
@@ -140,8 +141,7 @@ func main_press_icon() -> void:
 		1:
 			toggle_lights()
 		2:
-			#TODO: Bath
-			pass
+			bath_animation()
 		3:
 			stats_viewer_visibility(true)
 		4:
@@ -166,6 +166,10 @@ func disconnect_buttons_to_main_icons() -> void:
 
 
 func food_visibility(visibility: bool) -> void:
+	#? Do not open the menu if lights are off
+	if is_lights_off:
+		Speaker.sfx_game_lose()
+		return
 	#? Show/Hide the food screen
 	screen_food.visible = visibility
 	screen_main.visible = !visibility
@@ -178,6 +182,7 @@ func food_visibility(visibility: bool) -> void:
 		nekogotchi_device.button_c_pressed.connect(food_visibility.bind(false))
 	else:
 		Speaker.sfx_beep()
+		neko_anim.play("idle" if stats.fun < 0.6 else "happy")
 		nekogotchi_device.button_a_pressed.disconnect(food_select)
 		nekogotchi_device.button_b_pressed.disconnect(food_eat)
 		nekogotchi_device.button_c_pressed.disconnect(food_visibility.bind(false))
@@ -257,6 +262,35 @@ func toggle_lights() -> void:
 		Speaker.sfx_game_lose()
 		set_neko_speech("Don't wanna sleep!!")
 
+
+func bath_animation() -> void:
+	#? Do not play the animation if lights are off
+	if is_lights_off:
+		Speaker.sfx_game_lose()
+		return
+	disconnect_buttons_to_main_icons()
+	var had_poop: bool = $Main/PoopContainer/Poop1.visible
+	Speaker.sfx_confirm()
+	can_speech = false
+	set_neko_speech("")
+	neko_anim.play("idle")
+	$Main/CleaningSprite/CleaningAnim.play("cleaning")
+	await get_tree().create_timer(0.5).timeout
+	$Main/PoopContainer/Poop2.visible = false
+	await get_tree().create_timer(1.6).timeout
+	$Main/PoopContainer/Poop1.visible = false
+	await get_tree().create_timer(0.4).timeout
+	if had_poop:
+		await get_tree().create_timer(0.5).timeout
+		neko_anim.play("happy")
+		stats.fun += 0.2
+		Speaker.sfx_game_win()
+		await get_tree().create_timer(2).timeout
+	can_speech = true
+	neko_anim.play("idle" if stats.fun < 0.6 else "happy")
+	connect_buttons_to_main_icons()
+
+
 func stats_viewer_visibility(visibility: bool) -> void:
 	#? Show/Hide the stats viewer screen
 	screen_stats_viewer.visible = visibility
@@ -329,6 +363,10 @@ func refresh_time() -> void:
 	refresh_time()
 
 func add_poop():
+	#? Do not poop if lights are off
+	if is_lights_off:
+		Speaker.sfx_game_lose()
+		return
 	if !$Main/PoopContainer/Poop1.visible:
 		Speaker.sfx_poop()
 		$Main/PoopContainer/Poop1.visible = true
