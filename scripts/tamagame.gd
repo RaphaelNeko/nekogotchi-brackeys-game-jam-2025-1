@@ -403,6 +403,7 @@ func add_poop():
 	#? Do not poop if minigame is playing
 	if screen_minigame.visible:
 		return
+	neko_anim.play("idle" if stats.fun < 0.6 else "happy")
 	if !$Main/PoopContainer/Poop1.visible:
 		Speaker.sfx_poop()
 		$Main/PoopContainer/Poop1.visible = true

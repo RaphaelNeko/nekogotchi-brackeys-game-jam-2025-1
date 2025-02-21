@@ -1,12 +1,17 @@
-[gd_scene load_steps=16 format=3 uid="uid://c8udl3akkft1y"]
+[gd_scene load_steps=21 format=3 uid="uid://c8udl3akkft1y"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_akto4"]
 [ext_resource type="PackedScene" uid="uid://buhg6k20kino5" path="res://models/nekogotchi.tscn" id="1_kmspo"]
 [ext_resource type="Texture2D" uid="uid://cmalu4a4tkyfs" path="res://sprites/neko/nekogotchi4.png" id="2_7lmun"]
 [ext_resource type="PackedScene" uid="uid://cdpfkmxtdhgl1" path="res://scenes/game_2d.tscn" id="2_ph31a"]
+[ext_resource type="Resource" uid="uid://cii2vnrmuc5jw" path="res://dialogues/intro.dialogue" id="2_snqju"]
+[ext_resource type="Resource" uid="uid://bp44lib7bfxaw" path="res://dialogues/after_intro.dialogue" id="3_ousr2"]
+[ext_resource type="Resource" uid="uid://dkj76ohppduck" path="res://dialogues/intro_final.dialogue" id="4_7jo2m"]
 [ext_resource type="Texture2D" uid="uid://bkni0kbhvtsne" path="res://sprites/neko/nekogotchi5.png" id="4_kqvxr"]
 [ext_resource type="Texture2D" uid="uid://cflhyyr1nv4bk" path="res://sprites/test.png" id="6_4fkrv"]
 [ext_resource type="AudioStream" uid="uid://cu6yvwck72sdg" path="res://audios/sfx/device_appear.wav" id="7_cs0g4"]
+[ext_resource type="Texture2D" uid="uid://csigh4rs18x8w" path="res://sprites/instruction/instruction_manual.png" id="9_oljpe"]
+[ext_resource type="AudioStream" uid="uid://bm8lto5nya2jt" path="res://audios/sfx/paper/paper.tres" id="12_44p1f"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_egll1"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -163,11 +168,16 @@ _data = {
 [sub_resource type="ViewportTexture" id="ViewportTexture_uajv8"]
 viewport_path = NodePath("GotchiHUD/SubViewport")
 
-[node name="Game" type="Node" node_paths=PackedStringArray("intro_animation", "nekogotchi", "game_screen")]
+[node name="Game" type="Node" node_paths=PackedStringArray("intro_animation", "nekogotchi", "game_screen", "background_overlay", "instruction_manual")]
 script = ExtResource("1_akto4")
 intro_animation = NodePath("GotchiHUD/SubViewport/Control/IntroAnimationPlayer")
 nekogotchi = NodePath("Nekogotchi")
 game_screen = NodePath("GotchiHUD/SubViewport/Game2D")
+background_overlay = NodePath("HUD/BackgroundOverlay")
+dialogue_intro = ExtResource("2_snqju")
+dialogue_after_intro = ExtResource("3_ousr2")
+dialogue_intro_final = ExtResource("4_7jo2m")
+instruction_manual = NodePath("HUD/InstructionManual")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_hdo1k")
@@ -297,8 +307,62 @@ texture = ExtResource("6_4fkrv")
 expand_mode = 1
 stretch_mode = 5
 
+[node name="BackgroundOverlay" type="ColorRect" parent="HUD"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.0666667, 0.0666667, 0.0666667, 1)
+
+[node name="InstructionManual" type="TextureRect" parent="HUD"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -600.0
+offset_top = 550.0
+offset_right = 600.0
+offset_bottom = 1350.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -0.0610865
+pivot_offset = Vector2(600, 400)
+texture = ExtResource("9_oljpe")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="InstructionManual2" type="TextureRect" parent="HUD"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 361.0
+offset_top = 385.0
+offset_right = 1561.0
+offset_bottom = 1185.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 0.0610865
+pivot_offset = Vector2(600, 400)
+texture = ExtResource("9_oljpe")
+expand_mode = 1
+stretch_mode = 5
+
 [node name="DeviceAppear" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("7_cs0g4")
+
+[node name="Paper" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_44p1f")
+max_polyphony = 3
+bus = &"Paper"
 
 [editable path="Nekogotchi"]
 [editable path="Nekogotchi/Nekogotchi"]

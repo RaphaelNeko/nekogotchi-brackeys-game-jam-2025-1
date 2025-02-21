@@ -15,10 +15,14 @@ var is_battery_holder_removed: bool = false
 var battery_holder_tween: Tween
 var battery_holder_click_count: int = 0
 
+var can_press: bool = false
+
 signal battery_holder_removed
 
 
 func _input(event: InputEvent) -> void:
+	if !can_press:
+		return
 	if event.is_action_pressed("tama_button_a"):
 		button_press(0)
 	if event.is_action_pressed("tama_button_b"):
@@ -33,6 +37,8 @@ func _input(event: InputEvent) -> void:
 		battery_holder_cancel()
 
 func button_press(buttonID: int) -> void:
+	if !can_press:
+		return
 	match buttonID:
 		0:
 			if (tween_a):
@@ -60,6 +66,8 @@ func button_press(buttonID: int) -> void:
 			button_c_pressed.emit()
 
 func button_press_3d(_camera: Node, event: InputEvent, _event_position: Vector3 = Vector3.ZERO, _normal: Vector3 = Vector3.ZERO, _shape_idx: int = 0, buttonID: int = 0) -> void:
+	if !can_press:
+		return
 	if event.is_pressed():
 		button_press(buttonID)
 
@@ -93,6 +101,8 @@ func battery_holder_cancel() -> void:
 		battery_holder.position.y = 0
 
 func battery_holder_input_event(_camera: Node, event: InputEvent, _event_position: Vector3 = Vector3.ZERO, _normal: Vector3 = Vector3.ZERO, _shape_idx: int = 0) -> void:
+	if !can_press:
+		return
 	if is_battery_holder_removed:
 		return
 	if event is InputEventMouseButton and event.is_pressed():
