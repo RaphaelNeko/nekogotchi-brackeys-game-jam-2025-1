@@ -51,9 +51,9 @@ func play_intro() -> void:
 func start_game(_anim_name: String) -> void:
 	#? Starts the dialogues, can't press the device while dialogues are running
 	nekogotchi.can_press = false
+	await get_tree().create_timer(0.5).timeout
 	DialogueManager.show_dialogue_balloon(dialogue_after_intro)
 	intro_animation.animation_finished.disconnect(start_game)
-	await get_tree().create_timer(1).timeout
 	game_screen.visible = true
 	await DialogueManager.dialogue_ended
 	var tween : Tween = get_tree().create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_QUINT)

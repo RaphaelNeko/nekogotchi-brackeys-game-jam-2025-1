@@ -257,8 +257,17 @@ func toggle_lights() -> void:
 	#? Toggling the lights from the main screen
 	set_neko_speech()
 	is_lights_off = !is_lights_off
-	#? Checking if Neko is tired or not. Display the correct screen and animations depending on the tired state.
+
+	#? Checking if Neko is tired or not.
 	wanna_sleep = stats.energy < 0.15
+
+	#? Force sleep if it is bed time
+	if time_is_pm and time_hour >= 9:
+		wanna_sleep = true
+	if !time_is_pm and time_hour <= 7:
+		wanna_sleep = true
+
+	#? Display the correct screen and animations depending on the tired state.
 	sleep_background.visible = is_lights_off
 	no_sleep_overlay.visible = !wanna_sleep
 	neko_anim.play(("sleep" if wanna_sleep else "sleep_not_tired") if is_lights_off else "idle")
@@ -375,10 +384,17 @@ func refresh_time() -> void:
 			time_is_pm = !time_is_pm
 	main_menu_time_label.text = str(time_hour, ":", "0" if time_minute <= 9 else "", time_minute, " PM" if time_is_pm else " AM")
 
+	var is_night_time: bool = false
+	if time_is_pm and time_hour >= 9:
+		is_night_time = true
+	if !time_is_pm and time_hour <= 7:
+		is_night_time = true
+		
+
 	#? Decrease the stats
 	stats.energy += -0.005 if !is_lights_off else (0.05 if wanna_sleep else -0.005)
 	stats.energy = clampf(stats.energy, 0.0, 1.0)
-	if is_lights_off and stats.energy == 1.0:
+	if is_lights_off and stats.energy == 1.0 and !is_night_time:
 		toggle_lights()
 	stats.hunger += -0.005 if !is_lights_off else (-0.05 if wanna_sleep else -0.0075)
 	stats.hunger = clampf(stats.hunger, 0.0, 1.0)
