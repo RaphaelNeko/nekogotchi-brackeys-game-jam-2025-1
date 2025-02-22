@@ -6,6 +6,17 @@ extends Control
 @export var nekogotchi_device: Node3D
 
 @export var neko_anim: AnimationPlayer
+@export var glitch: Node
+
+enum GlitchType {
+	FIRST,
+	CONFIRM,
+	ALERT,
+	GAME_START,
+	GAME_END,
+	RANDOM,
+	SHORT, MED, LONG,
+}
 
 @export_category("CHOOSE YOUR NEKO SCREEN")
 @export var screen_choose_neko: Control
@@ -114,6 +125,8 @@ func choose_neko_confirm() -> void:
 	screen_menu_icons.visible = true
 	Speaker.sfx_beep()
 	connect_buttons_to_main_icons()
+	glitch.queue_glitch(GlitchType.FIRST)
+	long_glitch()
 
 
 func main_select_next_icon() -> void:
@@ -125,6 +138,8 @@ func main_select_next_icon() -> void:
 		selected_main_menu_icon = 0
 	main_menu_icons[selected_main_menu_icon].modulate.a = 1.0
 	Speaker.sfx_beep()
+	if stats.age >= 1:
+		glitch.queue_glitch(GlitchType.SHORT)
 
 func main_unselect_icon() -> void:
 	#? Unselecting the menu icon from the main screen with the C button
@@ -132,6 +147,8 @@ func main_unselect_icon() -> void:
 		main_menu_icons[selected_main_menu_icon].modulate.a = 0.4
 	selected_main_menu_icon = -1
 	Speaker.sfx_beep()
+	if stats.age >= 1:
+		glitch.queue_glitch(GlitchType.RANDOM)
 
 func main_press_icon() -> void:
 	#? Pressing the menu icon from the main screen with the B button
@@ -139,6 +156,9 @@ func main_press_icon() -> void:
 		return
 	
 	Speaker.sfx_confirm()
+	if stats.age >= 1:
+		glitch.queue_glitch(GlitchType.CONFIRM)
+	
 	#? Call the correct function depending on the pressed menu icon
 	match selected_main_menu_icon:
 		0:
@@ -150,8 +170,7 @@ func main_press_icon() -> void:
 		3:
 			stats_viewer_visibility(true)
 		4:
-			#TODO: Discipline
-			pass
+			glitch.queue_glitch(GlitchType.MED)
 		5:
 			minigame_visibility(true)
 
@@ -173,6 +192,8 @@ func food_visibility(visibility: bool) -> void:
 	#? Do not open the menu if lights are off
 	if is_lights_off:
 		Speaker.sfx_game_lose()
+		if stats.age >= 1:
+			glitch.queue_glitch(GlitchType.RANDOM)
 		return
 	#? Show/Hide the food screen
 	screen_food.visible = visibility
@@ -218,10 +239,14 @@ func food_eat() -> void:
 		Speaker.sfx_game_lose()
 		neko_anim.play("no")
 		food_timer.wait_time = 3.0
+		if stats.age >= 1:
+			glitch.queue_glitch(GlitchType.RANDOM)
 		
 	else:
 		set_neko_speech("")
 		Speaker.sfx_eating()
+		if stats.age >= 1:
+			glitch.queue_glitch(GlitchType.RANDOM)
 		neko_anim.play("eat")
 		if selected_food == 0:
 			stats.hunger += 0.1
@@ -262,9 +287,9 @@ func toggle_lights() -> void:
 	wanna_sleep = stats.energy < 0.15
 
 	#? Force sleep if it is bed time
-	if time_is_pm and time_hour >= 9:
+	if time_is_pm and time_hour >= 8:
 		wanna_sleep = true
-	if !time_is_pm and time_hour <= 7:
+	if !time_is_pm and time_hour < 7:
 		wanna_sleep = true
 
 	#? Display the correct screen and animations depending on the tired state.
@@ -273,6 +298,8 @@ func toggle_lights() -> void:
 	neko_anim.play(("sleep" if wanna_sleep else "sleep_not_tired") if is_lights_off else "idle")
 	if is_lights_off and !wanna_sleep:
 		Speaker.sfx_game_lose()
+		if stats.age >= 1:
+			glitch.queue_glitch(GlitchType.RANDOM)
 		set_neko_speech("Don't wanna sleep!!")
 
 
@@ -298,6 +325,8 @@ func bath_animation() -> void:
 		neko_anim.play("happy")
 		stats.fun += 0.2
 		Speaker.sfx_game_win()
+		if stats.age >= 1:
+			glitch.queue_glitch(GlitchType.GAME_END)
 		await get_tree().create_timer(2).timeout
 	can_speech = true
 	neko_anim.play("idle" if stats.fun < 0.6 else "happy")
@@ -312,6 +341,8 @@ func stats_viewer_visibility(visibility: bool) -> void:
 	if visibility:
 		disconnect_buttons_to_main_icons()
 		Speaker.sfx_confirm()
+		if stats.age >= 1:
+			glitch.queue_glitch(GlitchType.CONFIRM)
 		stats_bars_refresh()
 		nekogotchi_device.button_a_pressed.connect(stats_viewer_next)
 		nekogotchi_device.button_b_pressed.connect(stats_viewer_next)
@@ -326,6 +357,8 @@ func stats_viewer_visibility(visibility: bool) -> void:
 func stats_viewer_next() -> void:
 	#? Switch between the stats pages
 	Speaker.sfx_confirm()
+	if stats.age >= 1:
+			glitch.queue_glitch(GlitchType.CONFIRM)
 	screen_stats_viewer.get_child(1).visible = !screen_stats_viewer.get_child(1).visible
 	screen_stats_viewer.get_child(0).visible = !screen_stats_viewer.get_child(1).visible
 
@@ -353,11 +386,15 @@ func minigame_visibility(visibility: bool) -> void:
 	if visibility:
 		screen_minigame.start_game()
 		disconnect_buttons_to_main_icons()
+		if stats.age >= 1:
+			glitch.queue_glitch(GlitchType.GAME_START)
 	else:
 		set_neko_speech("")
 		neko_anim.play("idle" if stats.fun < 0.6 else "happy")
 		screen_minigame.close_game()
 		Speaker.sfx_beep()
+		if stats.age >= 1:
+			glitch.queue_glitch(GlitchType.GAME_END)
 		nekogotchi_device.button_c_pressed.disconnect(minigame_visibility.bind(false))
 		connect_buttons_to_main_icons()
 
@@ -379,15 +416,15 @@ func refresh_time() -> void:
 		time_hour += 1
 		if time_hour > 12:
 			time_hour = 1
-			if !time_is_pm:
+			if time_is_pm:
 				stats.age += 1
 			time_is_pm = !time_is_pm
 	main_menu_time_label.text = str(time_hour, ":", "0" if time_minute <= 9 else "", time_minute, " PM" if time_is_pm else " AM")
 
 	var is_night_time: bool = false
-	if time_is_pm and time_hour >= 9:
+	if time_is_pm and time_hour >= 8:
 		is_night_time = true
-	if !time_is_pm and time_hour <= 7:
+	if !time_is_pm and time_hour < 7:
 		is_night_time = true
 		
 
@@ -409,7 +446,10 @@ func refresh_time() -> void:
 			add_poop()
 
 	#? Repeat the function every second
-	await get_tree().create_timer(1).timeout
+	var wait_time: float = 1.0
+	if is_night_time and is_lights_off:
+		wait_time = 0.05
+	await get_tree().create_timer(wait_time).timeout
 	refresh_time()
 
 func add_poop():
@@ -423,10 +463,15 @@ func add_poop():
 	if !$Main/PoopContainer/Poop1.visible:
 		Speaker.sfx_poop()
 		$Main/PoopContainer/Poop1.visible = true
+		if stats.age >= 2:
+			glitch.queue_glitch(GlitchType.SHORT)
 		return
 	if !$Main/PoopContainer/Poop2.visible:
 		Speaker.sfx_poop()
 		$Main/PoopContainer/Poop2.visible = true
+		if stats.age >= 2:
+			glitch.queue_glitch(GlitchType.SHORT)
+		
 
 func check_for_speech():
 	#? Do not speech if the main screen isn't visible, or the lights are turned off, or the can_speech variable is false
@@ -438,16 +483,20 @@ func check_for_speech():
 		return
 	
 	#? Force the sleepy speech if it is bed time
-	if time_is_pm and time_hour >= 9:
+	if time_is_pm and time_hour >= 8:
 		if neko_speech_label.text != "I am sleepy!!":
 			set_neko_speech("I am sleepy!!")
 			Speaker.sfx_alert()
+			if stats.age >= 1:
+				glitch.queue_glitch(GlitchType.ALERT)
 			neko_anim.play("worry")
 			return
-	if !time_is_pm and time_hour <= 7:
+	if !time_is_pm and time_hour < 7:
 		if neko_speech_label.text != "I am sleepy!!":
 			set_neko_speech("I am sleepy!!")
 			Speaker.sfx_alert()
+			if stats.age >= 1:
+				glitch.queue_glitch(GlitchType.ALERT)
 			neko_anim.play("worry")
 			return
 	
@@ -458,18 +507,31 @@ func check_for_speech():
 				if neko_speech_label.text != "I am sleepy!!":
 					set_neko_speech("Let's play!!")
 					Speaker.sfx_alert()
+					if stats.age >= 1:
+						glitch.queue_glitch(GlitchType.ALERT)
 					neko_anim.play("worry")
 		if stats.hunger < 0.15 and neko_speech_label.text != "I am hungry!!":
 			if neko_speech_label.text != "I am sleepy!!":
 				set_neko_speech("I am hungry!!")
 				Speaker.sfx_alert()
+				if stats.age >= 1:
+					glitch.queue_glitch(GlitchType.ALERT)
 				neko_anim.play("worry")
 		if stats.energy < 0.15 and neko_speech_label.text != "I am sleepy!!":
 			set_neko_speech("I am sleepy!!")
 			Speaker.sfx_alert()
+			if stats.age >= 1:
+				glitch.queue_glitch(GlitchType.ALERT)
 			neko_anim.play("worry")
 
 func _process(_delta: float) -> void:
 	#? Debug keys for testing
 	if OS.is_debug_build() and Input.is_action_just_pressed("ui_focus_next") and game_state != GameStateType.INTRO:
 		time_minute += 10
+
+func long_glitch() -> void:
+	var random_timer: float = randf_range(128.0, 256.0)
+	await get_tree().create_timer(random_timer).timeout
+	if stats.age >= 1:
+		glitch.queue_glitch(GlitchType.LONG)
+	long_glitch()

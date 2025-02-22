@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://c8udl3akkft1y"]
+[gd_scene load_steps=40 format=3 uid="uid://c8udl3akkft1y"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_akto4"]
 [ext_resource type="PackedScene" uid="uid://buhg6k20kino5" path="res://models/nekogotchi.tscn" id="1_kmspo"]
@@ -10,8 +10,25 @@
 [ext_resource type="Texture2D" uid="uid://bkni0kbhvtsne" path="res://sprites/neko/nekogotchi5.png" id="4_kqvxr"]
 [ext_resource type="Texture2D" uid="uid://cflhyyr1nv4bk" path="res://sprites/test.png" id="6_4fkrv"]
 [ext_resource type="AudioStream" uid="uid://cu6yvwck72sdg" path="res://audios/sfx/device_appear.wav" id="7_cs0g4"]
+[ext_resource type="Shader" path="res://glitch.gdshader" id="8_w2i30"]
 [ext_resource type="Texture2D" uid="uid://csigh4rs18x8w" path="res://sprites/instruction/instruction_manual.png" id="9_oljpe"]
+[ext_resource type="Script" path="res://scripts/glitch_manager.gd" id="11_1bnc6"]
+[ext_resource type="AudioStream" uid="uid://dvi56n4eqe6s0" path="res://audios/sfx/errors/error_first.ogg" id="12_001f8"]
 [ext_resource type="AudioStream" uid="uid://bm8lto5nya2jt" path="res://audios/sfx/paper/paper.tres" id="12_44p1f"]
+[ext_resource type="AudioStream" uid="uid://c2v84yyreddg0" path="res://audios/sfx/errors/error_confirm.ogg" id="13_yourk"]
+[ext_resource type="AudioStream" uid="uid://dd5b6e7cjf56h" path="res://audios/sfx/errors/error_alert.ogg" id="14_vpuww"]
+[ext_resource type="AudioStream" uid="uid://dt10wbxd4xg5y" path="res://audios/sfx/errors/error_game_start.ogg" id="15_r37bh"]
+[ext_resource type="AudioStream" uid="uid://3k4x2bmraxpm" path="res://audios/sfx/errors/error_game_win.ogg" id="16_8v166"]
+[ext_resource type="AudioStream" uid="uid://cjv2rf7ic2p3g" path="res://audios/sfx/errors/error_random_1.ogg" id="17_1iuh2"]
+[ext_resource type="AudioStream" uid="uid://1r5sug3wijde" path="res://audios/sfx/errors/error_random_2.ogg" id="18_88wvc"]
+[ext_resource type="AudioStream" uid="uid://bfgp82wsxba52" path="res://audios/sfx/errors/error_random_3.ogg" id="19_han4v"]
+[ext_resource type="AudioStream" uid="uid://bn7mjovnuisw" path="res://audios/sfx/errors/error_random_4.ogg" id="20_ejfi1"]
+[ext_resource type="AudioStream" uid="uid://xau6jgnr0v7r" path="res://audios/sfx/errors/error_random_5.ogg" id="21_kfmkc"]
+[ext_resource type="AudioStream" uid="uid://bwlbn8qom0v0i" path="res://audios/sfx/errors/error_random_6.ogg" id="22_3f88n"]
+[ext_resource type="AudioStream" uid="uid://c303x74khny23" path="res://audios/sfx/errors/error_random_7.ogg" id="23_7mces"]
+[ext_resource type="AudioStream" uid="uid://c86j6le8l7n2j" path="res://audios/sfx/errors/error_short.ogg" id="24_yphrd"]
+[ext_resource type="AudioStream" uid="uid://cj42x15238t23" path="res://audios/sfx/errors/error_med.ogg" id="25_tru7y"]
+[ext_resource type="AudioStream" uid="uid://ipayencq8j6n" path="res://audios/sfx/errors/error_long.ogg" id="26_u05sd"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_egll1"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -165,6 +182,22 @@ _data = {
 "intro": SubResource("Animation_kyr71")
 }
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1gbov"]
+shader = ExtResource("8_w2i30")
+shader_parameter/shake_power = 1.0
+shader_parameter/shake_rate = 1.0
+shader_parameter/shake_speed = 5.0
+shader_parameter/shake_block_size = 30.5
+shader_parameter/shake_color_rate = 0.01
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gv3mb"]
+shader = ExtResource("8_w2i30")
+shader_parameter/shake_power = 0.025
+shader_parameter/shake_rate = 1.0
+shader_parameter/shake_speed = 1.0
+shader_parameter/shake_block_size = 14.745
+shader_parameter/shake_color_rate = 0.01
+
 [sub_resource type="ViewportTexture" id="ViewportTexture_uajv8"]
 viewport_path = NodePath("GotchiHUD/SubViewport")
 
@@ -205,9 +238,10 @@ use_debanding = true
 canvas_item_default_texture_filter = 2
 gui_snap_controls_to_pixels = false
 
-[node name="Game2D" parent="GotchiHUD/SubViewport" node_paths=PackedStringArray("nekogotchi_device") instance=ExtResource("2_ph31a")]
+[node name="Game2D" parent="GotchiHUD/SubViewport" node_paths=PackedStringArray("nekogotchi_device", "glitch") instance=ExtResource("2_ph31a")]
 visible = false
 nekogotchi_device = NodePath("../../../Nekogotchi")
+glitch = NodePath("../../../GlitchManager")
 
 [node name="Control" type="Control" parent="GotchiHUD/SubViewport"]
 custom_minimum_size = Vector2(512, 512)
@@ -259,11 +293,32 @@ pivot_offset = Vector2(64, 128)
 texture = ExtResource("2_7lmun")
 expand_mode = 1
 
+[node name="BigGlitch" type="ColorRect" parent="GotchiHUD/SubViewport"]
+visible = false
+material = SubResource("ShaderMaterial_1gbov")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SmallGlitch" type="ColorRect" parent="GotchiHUD/SubViewport"]
+visible = false
+material = SubResource("ShaderMaterial_gv3mb")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
 [node name="Nekogotchi" parent="." instance=ExtResource("1_kmspo")]
 transform = Transform3D(0.258819, 0, -0.965926, 0, 1, 0, 0.965926, 0, 0.258819, 0, 5, 0)
 
 [node name="TamaChainBase" parent="Nekogotchi/Nekogotchi/TamaBase/TamaChainHolder" index="0"]
 transform = Transform3D(-0.891872, 0.391427, 0.226602, -0.069786, -0.614108, 0.78613, 0.446871, 0.685314, 0.575022, -0.035248, -0.0396296, -0.136325)
+
+[node name="TamaChain" parent="Nekogotchi/Nekogotchi/TamaBase/TamaChainHolder/TamaChainBase" index="0"]
+transform = Transform3D(-0.64067, -0.138858, 0.069937, 0.1412, -0.395524, 0.508186, -0.0650782, 0.508831, 0.414108, 0.189389, 1.04386, 0.843364)
 
 [node name="Sprite3D" type="Sprite3D" parent="Nekogotchi/Nekogotchi/TamaBase" index="4"]
 transform = Transform3D(0.19, 0, 3.72529e-09, -3.72529e-09, 0, 0.19, 0, -0.19, 0, -3.72529e-09, 0.230111, 0)
@@ -355,6 +410,22 @@ pivot_offset = Vector2(600, 400)
 texture = ExtResource("9_oljpe")
 expand_mode = 1
 stretch_mode = 5
+
+[node name="GlitchManager" type="Node" parent="." node_paths=PackedStringArray("player", "small_glitch_fx", "big_glitch_fx")]
+script = ExtResource("11_1bnc6")
+glitch_first = ExtResource("12_001f8")
+glitch_confirm = ExtResource("13_yourk")
+glitch_alert = ExtResource("14_vpuww")
+glitch_game = Array[AudioStream]([ExtResource("15_r37bh"), ExtResource("16_8v166")])
+glitch_random = Array[AudioStream]([ExtResource("17_1iuh2"), ExtResource("18_88wvc"), ExtResource("19_han4v"), ExtResource("20_ejfi1"), ExtResource("21_kfmkc"), ExtResource("22_3f88n"), ExtResource("23_7mces")])
+glitch_short = ExtResource("24_yphrd")
+glitch_med = ExtResource("25_tru7y")
+glitch_long = ExtResource("26_u05sd")
+player = NodePath("AudioStreamPlayer")
+small_glitch_fx = NodePath("../GotchiHUD/SubViewport/SmallGlitch")
+big_glitch_fx = NodePath("../GotchiHUD/SubViewport/BigGlitch")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="GlitchManager"]
 
 [node name="DeviceAppear" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("7_cs0g4")

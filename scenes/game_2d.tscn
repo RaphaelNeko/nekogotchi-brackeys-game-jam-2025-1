@@ -1,4 +1,4 @@
-[gd_scene load_steps=92 format=3 uid="uid://cdpfkmxtdhgl1"]
+[gd_scene load_steps=94 format=3 uid="uid://cdpfkmxtdhgl1"]
 
 [ext_resource type="Script" path="res://scripts/tamagame.gd" id="1_fs36l"]
 [ext_resource type="Texture2D" uid="uid://biptaodx1r226" path="res://sprites/menu_icons/icon_bath.png" id="2_d5u53"]
@@ -60,6 +60,9 @@
 [ext_resource type="Script" path="res://scripts/minigame_ball.gd" id="57_7wg40"]
 [ext_resource type="Texture2D" uid="uid://boh4aniy0nacs" path="res://sprites/minigame/ball_2.png" id="57_jvoiw"]
 [ext_resource type="Texture2D" uid="uid://cvsv152rdq0cy" path="res://sprites/minigame/ball_3.png" id="58_yjjhb"]
+[ext_resource type="Texture2D" uid="uid://boggy4s2wexdb" path="res://sprites/eggs/egg_2.png" id="61_lbnmp"]
+[ext_resource type="Texture2D" uid="uid://cbxc0o1m8bo1f" path="res://sprites/eggs/egg_1.png" id="62_qddg2"]
+[ext_resource type="Texture2D" uid="uid://dtgxlvlegx1qp" path="res://sprites/eggs/egg_3.png" id="63_gohrf"]
 
 [sub_resource type="Resource" id="Resource_j01xh"]
 script = ExtResource("2_erxip")
@@ -635,8 +638,6 @@ _data = {
 "hit": SubResource("Animation_xvhyy"),
 "roll": SubResource("Animation_2gi6o")
 }
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_108bk"]
 
 [node name="Game2D" type="Control" node_paths=PackedStringArray("neko_anim", "screen_choose_neko", "screen_main", "screen_menu_icons", "main_menu_icons", "main_menu_time_label", "neko_speech_label", "screen_food", "food_arrow", "food_anim", "sleep_background", "no_sleep_overlay", "screen_stats_viewer", "screen_minigame")]
 custom_minimum_size = Vector2(512, 512)
@@ -1536,32 +1537,35 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Egg1" type="TextureRect" parent="ChooseYourNeko/EggsContainer"]
+texture_filter = 1
 custom_minimum_size = Vector2(128, 128)
 layout_mode = 2
 offset_left = 29.0
 offset_right = 157.0
 offset_bottom = 128.0
-texture = SubResource("PlaceholderTexture2D_108bk")
+texture = ExtResource("61_lbnmp")
 expand_mode = 1
 stretch_mode = 5
 
 [node name="Egg2" type="TextureRect" parent="ChooseYourNeko/EggsContainer"]
+texture_filter = 1
 custom_minimum_size = Vector2(128, 128)
 layout_mode = 2
 offset_left = 192.0
 offset_right = 320.0
 offset_bottom = 128.0
-texture = SubResource("PlaceholderTexture2D_108bk")
+texture = ExtResource("62_qddg2")
 expand_mode = 1
 stretch_mode = 5
 
 [node name="Egg3" type="TextureRect" parent="ChooseYourNeko/EggsContainer"]
+texture_filter = 1
 custom_minimum_size = Vector2(128, 128)
 layout_mode = 2
 offset_left = 355.0
 offset_right = 483.0
 offset_bottom = 128.0
-texture = SubResource("PlaceholderTexture2D_108bk")
+texture = ExtResource("63_gohrf")
 expand_mode = 1
 stretch_mode = 5
 
